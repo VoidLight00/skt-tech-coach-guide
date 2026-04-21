@@ -1,42 +1,49 @@
-import { Home, CalendarClock, RefreshCw, Layers, Hammer, Clapperboard, Siren, Film, Mic, NotebookPen } from "lucide-react";
+import { BookOpen, CalendarDays, Repeat, LayoutGrid, Wrench, Film, ShieldAlert, Mic, Clapperboard, NotebookPen } from "lucide-react";
 
 export type NavItem = {
   href: string;
+  number: string;
   label: string;
-  kr: string;
-  icon: any;
-  accent: "cyan" | "magenta" | "gold" | "lime" | "red";
   summary: string;
+  icon: any;
 };
 
 export const NAV: NavItem[] = [
-  { href: "/", label: "Home", kr: "교과서 서문", icon: Home, accent: "cyan",
-    summary: "오늘의 러닝 카드 · 빠른 점프 · 6대 원칙" },
-  { href: "/today", label: "Today", kr: "당일 실행플랜", icon: CalendarClock, accent: "magenta",
-    summary: "4/21·4/23 타임라인 · 준비물 · Pre/During/Post" },
-  { href: "/script", label: "1-min Script", kr: "1분 프레임 압축", icon: Mic, accent: "gold",
-    summary: "팀 진입 첫 30~60초 고정 스크립트" },
-  { href: "/loop", label: "Coaching Loop", kr: "코칭 루프", icon: RefreshCw, accent: "cyan",
-    summary: "4단계 루프 · 체크리스트 · 패턴 대응" },
-  { href: "/framework", label: "Frameworks", kr: "프레임워크 치트시트", icon: Layers, accent: "lime",
-    summary: "입력→처리→판단→출력 · 9역할 · 5방식 · 난이도" },
-  { href: "/recipes", label: "Recipes R1~R10", kr: "상황별 툴 레시피", icon: Hammer, accent: "magenta",
-    summary: "상황→도구→프롬프트→30초 시연 대본" },
-  { href: "/scenarios", label: "Scenarios", kr: "실전 시연 A/B/C", icon: Clapperboard, accent: "gold",
-    summary: "재무 · 투자자 키워드 · 엑셀 Q&A" },
-  { href: "/do-dont", label: "DO / DON'T", kr: "금지와 권장", icon: Siren, accent: "red",
-    summary: "금지 발화 · 고정 문구 · 보안 전략" },
-  { href: "/simulation", label: "Simulation", kr: "현장 시뮬레이션", icon: Film, accent: "cyan",
-    summary: "Scene 0~6 시네마틱 리허설" },
-  { href: "/log", label: "Coaching Log", kr: "코칭 로그", icon: NotebookPen, accent: "lime",
-    summary: "팀별 기록 템플릿 + 회고" },
+  { href: "/",            number: "00", label: "서문",             summary: "교과서 읽는 법과 오늘의 러닝 카드", icon: BookOpen },
+  { href: "/today",       number: "01", label: "당일 실행플랜",     summary: "4월 21일과 23일, 현장 타임라인", icon: CalendarDays },
+  { href: "/script",      number: "02", label: "진입 스크립트",     summary: "팀 앞에 앉은 첫 1분", icon: Mic },
+  { href: "/loop",        number: "03", label: "코칭 루프",        summary: "경청에서 정리까지 25분의 박자", icon: Repeat },
+  { href: "/framework",   number: "04", label: "프레임워크",       summary: "업무 구조화·데이터 점검·난이도·구현 방식", icon: LayoutGrid },
+  { href: "/recipes",     number: "05", label: "툴 레시피",        summary: "상황·도구·프롬프트 10가지 조합", icon: Wrench },
+  { href: "/scenarios",   number: "06", label: "실전 시나리오",    summary: "재무, 투자자 미팅, 엑셀 Q&A", icon: Clapperboard },
+  { href: "/do-dont",     number: "07", label: "원칙과 금지",      summary: "말해야 할 것과 말하지 말아야 할 것", icon: ShieldAlert },
+  { href: "/simulation",  number: "08", label: "현장 시뮬레이션",  summary: "장면 0부터 6까지, 상황과 반응", icon: Film },
+  { href: "/log",         number: "09", label: "코칭 로그",        summary: "팀별 기록을 남기고 내보내기", icon: NotebookPen },
 ];
 
 export const PRINCIPLES = [
-  { t: "도구 소개가 메인이 되면 안 된다", d: "가능성·업무 설계 먼저, 도구는 부연.", accent: "cyan" },
-  { t: "사내 tool/사내망 먼저 언급 금지", d: "받으면 '잘 모르겠습니다, 확인 후 안내드리겠습니다'.", accent: "red" },
-  { t: "보안 확인은 매 팀마다", d: "민감도 상이면 'AI로 코드만 생성 → 사내망 실행'.", accent: "magenta" },
-  { t: "암묵지 명시화 유도", d: "'감'으로 판단하시는 부분을 문서화하면 AI에게 시킬 수 있다.", accent: "gold" },
-  { t: "완벽한 결과보다 가능성 보여주기", d: "'이런 흐름으로 작업될 수 있다'를 보여주는 것.", accent: "lime" },
-  { t: "팀 진입 시 프레임워크 1분 압축", d: "미니특강 생략됐으므로 코치가 첫 30~60초에 깔아줌.", accent: "cyan" },
+  {
+    t: "도구가 주인공이 되지 않는다",
+    d: "ChatGPT, Claude, Gemini의 이름을 먼저 꺼내지 않는다. 실무자의 업무를 먼저 듣고, 어디에 AI가 들어갈 수 있는지를 함께 찾은 뒤 도구는 각주로 붙인다.",
+  },
+  {
+    t: "사내 도구는 추측하지 않는다",
+    d: '"잘 모르겠습니다. 확인 후 안내드리겠습니다." 이 한 문장이 25분을 살린다. 사내망 질문을 받으면 메모하고 담당자에게 넘긴다.',
+  },
+  {
+    t: "보안은 대화의 첫 번째 질문이다",
+    d: "매 팀에 들어가면 첫 질문은 동일하다. 이 업무의 데이터, 외부 AI에 넣어도 되나요. 답에 따라 이어지는 대화의 방식이 완전히 달라진다.",
+  },
+  {
+    t: "암묵지를 언어로 끌어낸다",
+    d: "실무자가 감으로 판단하는 부분을 말로 풀어내게 하고, 옆 사람이 받아적게 한다. 그 문서가 AI에게 줄 수 있는 가장 귀한 재료다.",
+  },
+  {
+    t: "완벽한 결과보다 가능성의 흐름을 보여준다",
+    d: "30분 안에 해결되는 문제는 없다. 그래도 사람들이 기억하는 것은 '이렇게도 되는구나'라는 한 번의 체험이다. 그걸 만들어주는 것이 오늘의 역할이다.",
+  },
+  {
+    t: "팀 앞에서 1분만 프레임을 깔고 시작한다",
+    d: "미니 강의가 생략되었으므로, 코치가 짧게 뼈대를 깔지 않으면 팀은 Step 4를 맨 공기 위에 짓게 된다. 30초에서 60초, 그 이상은 설교다.",
+  },
 ] as const;

@@ -6,59 +6,59 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        void: {
-          bg: "#07080b",
-          surface: "#0e1017",
-          elev: "#14171f",
-          line: "#1f2330",
-          muted: "#7b8193",
-          text: "#e6e9f2",
-          ink: "#f4f6fb",
+        brand: {
+          50:  "#fff4ed",
+          100: "#ffe6d4",
+          200: "#ffc8a8",
+          300: "#ffa271",
+          400: "#ff7a3d",
+          500: "#ff6b35",
+          600: "#ff8500",
+          700: "#d15c00",
+          800: "#a34600",
+          900: "#7a3400",
         },
-        neon: {
-          cyan: "#5cf1ff",
-          magenta: "#ff4fd8",
-          gold: "#ffd166",
-          lime: "#b6f36a",
+        ink: {
+          900: "#0f172a",
+          800: "#1e293b",
+          700: "#334155",
+          600: "#475569",
+          500: "#64748b",
+          400: "#94a3b8",
+          300: "#cbd5e1",
+          200: "#e2e8f0",
+          100: "#f1f5f9",
+          50:  "#f8fafc",
         },
-        skt: {
-          red: "#ea0029",
-          orange: "#ff7a00",
-        },
+        paper: "#ffffff",
+        night: "#0f172a",
       },
       fontFamily: {
-        sans: ["Pretendard", "ui-sans-serif", "system-ui", "sans-serif"],
+        sans: ["Inter", "Pretendard", "ui-sans-serif", "system-ui", "sans-serif"],
         serif: ["'Noto Serif KR'", "ui-serif", "Georgia", "serif"],
         mono: ["'JetBrains Mono'", "ui-monospace", "SFMono-Regular", "monospace"],
       },
-      boxShadow: {
-        neon: "0 0 0 1px rgba(92,241,255,0.25), 0 0 28px -8px rgba(92,241,255,0.6)",
-        magenta: "0 0 0 1px rgba(255,79,216,0.25), 0 0 28px -8px rgba(255,79,216,0.6)",
+      fontSize: {
+        "display-xl": ["3.75rem", { lineHeight: "1.1", letterSpacing: "-0.025em" }],
+        "display-lg": ["3rem",    { lineHeight: "1.12", letterSpacing: "-0.02em" }],
+        "display-md": ["2.25rem", { lineHeight: "1.18", letterSpacing: "-0.015em" }],
       },
-      backgroundImage: {
-        "grid-fade":
-          "radial-gradient(1200px 600px at 10% -10%, rgba(92,241,255,0.08), transparent 60%), radial-gradient(900px 500px at 90% 10%, rgba(255,79,216,0.06), transparent 60%)",
-        "scanline":
-          "repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 3px)",
+      boxShadow: {
+        card:   "0 1px 2px 0 rgba(15,23,42,0.04), 0 1px 3px 0 rgba(15,23,42,0.04)",
+        hover:  "0 10px 25px -6px rgba(15,23,42,0.12), 0 4px 10px -4px rgba(15,23,42,0.06)",
+        brand:  "0 4px 12px rgba(255,107,53,0.24)",
+        brandLg:"0 10px 28px rgba(255,107,53,0.28)",
+      },
+      borderRadius: {
+        sm: "6px", md: "8px", lg: "12px", xl: "16px", "2xl": "20px",
       },
       keyframes: {
-        "pulse-ring": {
-          "0%,100%": { boxShadow: "0 0 0 0 rgba(92,241,255,0.35)" },
-          "50%": { boxShadow: "0 0 0 14px rgba(92,241,255,0)" },
-        },
-        "shine": {
-          "0%": { backgroundPosition: "-200% 0" },
-          "100%": { backgroundPosition: "200% 0" },
-        },
-        "fade-up": {
-          "0%": { opacity: "0", transform: "translateY(14px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
+        "fade-up": { "0%": { opacity: "0", transform: "translateY(8px)" }, "100%": { opacity: "1", transform: "translateY(0)" } },
+        "fade-in": { "0%": { opacity: "0" }, "100%": { opacity: "1" } },
       },
       animation: {
-        "pulse-ring": "pulse-ring 2.2s ease-in-out infinite",
-        shine: "shine 2.5s linear infinite",
-        "fade-up": "fade-up 0.6s ease-out both",
+        "fade-up": "fade-up 0.5s ease-out both",
+        "fade-in": "fade-in 0.4s ease-out both",
       },
     },
   },

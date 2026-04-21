@@ -5,30 +5,23 @@ import { ReactNode, useEffect, useState } from "react";
 import Link from "next/link";
 import { Check, ChevronRight } from "lucide-react";
 
-export function PageFrame({ title, subtitle, kicker, accent = "cyan", children }: {
-  title: string; subtitle?: string; kicker?: string; accent?: "cyan" | "magenta" | "gold" | "lime" | "red"; children: ReactNode;
+export function PageFrame({ eyebrow, title, lede, children }: {
+  eyebrow?: string; title: string; lede?: string; children: ReactNode;
 }) {
   const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 20 });
-  const kickerColor =
-    accent === "cyan" ? "text-neon-cyan"
-    : accent === "magenta" ? "text-neon-magenta"
-    : accent === "gold" ? "text-neon-gold"
-    : accent === "lime" ? "text-neon-lime" : "text-red-400";
+  const scaleX = useSpring(scrollYProgress, { stiffness: 160, damping: 24 });
   return (
-    <div className="relative min-h-screen">
-      <motion.div style={{ scaleX }} className="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-neon-cyan via-neon-magenta to-neon-gold origin-left z-50" />
-      <div className="void-mesh absolute inset-0 pointer-events-none" />
-      <div className="relative z-10 px-5 lg:px-14 pt-8 pb-24 max-w-[1100px]">
-        {kicker && (
-          <div className={`uppercase tracking-[0.25em] text-[11px] ${kickerColor} mb-3`}>{kicker}</div>
-        )}
-        <h1 className="textbook-h1 text-4xl md:text-5xl text-void-ink leading-tight">
-          <span className="shine-text">{title}</span>
-        </h1>
-        {subtitle && <p className="mt-4 text-void-muted max-w-2xl text-[15px] leading-relaxed">{subtitle}</p>}
-        <div className="neon-divider my-8" />
-        <div className="prose-void">{children}</div>
+    <div className="relative">
+      <motion.div style={{ scaleX }} className="fixed top-0 left-0 right-0 h-[2px] bg-brand origin-left z-50" />
+      <div className="px-6 lg:px-14 py-10 lg:py-14 max-w-[980px]">
+        <header className="mb-10">
+          {eyebrow && <div className="eyebrow mb-4">{eyebrow}</div>}
+          <h1 className="serif-kr text-4xl md:text-5xl font-bold tracking-tight leading-tight text-ink-900 dark:text-ink-50">
+            {title}
+          </h1>
+          {lede && <p className="mt-5 text-ink-600 dark:text-ink-300 text-[17px] leading-[1.75] max-w-[680px]">{lede}</p>}
+        </header>
+        <div className="prose-brand">{children}</div>
       </div>
     </div>
   );
@@ -36,19 +29,19 @@ export function PageFrame({ title, subtitle, kicker, accent = "cyan", children }
 
 export function Section({ n, title, desc, children }: { n?: string | number; title: string; desc?: string; children: ReactNode }) {
   return (
-    <section className="mb-14 scroll-mt-20 animate-fade-up">
-      <div className="flex items-baseline gap-3 mb-4">
-        {n && <span className="font-mono text-neon-cyan text-sm">{String(n).padStart(2, "0")}</span>}
-        <h2 className="textbook-h2 text-2xl md:text-3xl text-void-ink">{title}</h2>
+    <section className="mb-14 scroll-mt-24 animate-fade-up">
+      <div className="mb-5 flex items-baseline gap-3">
+        {n !== undefined && <span className="font-mono text-[12px] text-brand">§ {typeof n === "number" ? String(n).padStart(2, "0") : n}</span>}
+        <h2 className="serif-kr text-[26px] md:text-[32px] font-bold tracking-tight text-ink-900 dark:text-ink-50">{title}</h2>
       </div>
-      {desc && <p className="text-void-muted mb-5 max-w-2xl leading-relaxed">{desc}</p>}
+      {desc && <p className="text-ink-600 dark:text-ink-300 max-w-[660px] leading-relaxed mb-6">{desc}</p>}
       {children}
     </section>
   );
 }
 
-export function Card({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return <div className={`void-card p-5 md:p-6 ${className}`}>{children}</div>;
+export function Card({ children, className = "", hover = true }: { children: ReactNode; className?: string; hover?: boolean }) {
+  return <div className={`card ${hover ? "card-hover" : ""} p-5 md:p-6 ${className}`}>{children}</div>;
 }
 
 export function CardGrid({ cols = 2, children }: { cols?: 1 | 2 | 3 | 4 | 5; children: ReactNode }) {
@@ -62,24 +55,21 @@ export function CardGrid({ cols = 2, children }: { cols?: 1 | 2 | 3 | 4 | 5; chi
 
 export function Quote({ children, by }: { children: ReactNode; by?: string }) {
   return (
-    <blockquote className="relative pl-5 md:pl-6 py-2 my-5 border-l-2 border-neon-cyan/60 text-void-ink italic">
-      {children}
-      {by && <div className="mt-2 text-[11px] text-void-muted uppercase tracking-[0.25em] not-italic">— {by}</div>}
-    </blockquote>
+    <figure className="my-7 pl-5 border-l-2 border-brand">
+      <blockquote className="serif-kr text-[17px] md:text-[18px] leading-[1.8] text-ink-800 dark:text-ink-100">
+        {children}
+      </blockquote>
+      {by && <figcaption className="mt-2 text-[12px] uppercase tracking-[0.16em] text-ink-500 dark:text-ink-400">— {by}</figcaption>}
+    </figure>
   );
 }
 
-export function Callout({ tone = "info", title, children }: { tone?: "info" | "warn" | "ok" | "danger"; title?: string; children: ReactNode }) {
-  const map = {
-    info: "border-neon-cyan/40 bg-[rgba(92,241,255,0.05)]",
-    warn: "border-neon-gold/40 bg-[rgba(255,209,102,0.05)]",
-    ok: "border-neon-lime/40 bg-[rgba(182,243,106,0.05)]",
-    danger: "border-red-400/40 bg-[rgba(255,107,107,0.05)]",
-  }[tone];
+export function Callout({ tone = "brand", title, children }: { tone?: "brand" | "neutral"; title?: string; children: ReactNode }) {
+  const cls = tone === "brand" ? "callout brand" : "callout";
   return (
-    <div className={`border-l-4 ${map} p-4 rounded-r-lg my-5 text-[14px]`}>
-      {title && <div className="font-semibold text-void-ink mb-1">{title}</div>}
-      <div className="text-void-text leading-relaxed">{children}</div>
+    <div className={`${cls} my-6 text-[14.5px] leading-relaxed`}>
+      {title && <div className="font-semibold mb-1 text-ink-900 dark:text-ink-50">{title}</div>}
+      <div className="text-ink-700 dark:text-ink-200">{children}</div>
     </div>
   );
 }
@@ -101,23 +91,23 @@ export function Checklist({ items, storageKey }: { items: string[]; storageKey?:
     if (storageKey && typeof window !== "undefined") localStorage.setItem(storageKey, JSON.stringify(next));
   }
   return (
-    <ul className="flex flex-col gap-2">
+    <ul className="flex flex-col gap-1.5 my-2">
       {items.map((t, i) => (
         <li key={i}>
           <button
             onClick={() => toggle(i)}
-            className={`w-full text-left flex items-start gap-3 p-3 rounded-lg border transition-all ${
-              checked[i] ? "border-neon-lime/40 bg-[rgba(182,243,106,0.05)]" : "border-void-line hover:border-neon-cyan/40"
+            className={`w-full text-left flex items-start gap-3 p-3 rounded-lg border transition-colors ${
+              checked[i]
+                ? "border-brand-100 bg-brand-50 dark:bg-[rgba(255,107,53,0.08)] dark:border-[rgba(255,107,53,0.25)]"
+                : "border-ink-200 dark:border-ink-800 hover:border-brand-100"
             }`}
           >
-            <span
-              className={`mt-0.5 w-5 h-5 shrink-0 rounded-md border flex items-center justify-center transition-all ${
-                checked[i] ? "bg-neon-lime/20 border-neon-lime/60" : "border-void-line"
-              }`}
-            >
-              {checked[i] && <Check className="w-3.5 h-3.5 text-neon-lime" />}
+            <span className={`mt-0.5 w-[18px] h-[18px] shrink-0 rounded border flex items-center justify-center transition-colors ${
+              checked[i] ? "bg-brand border-brand text-white" : "border-ink-300 dark:border-ink-600"
+            }`}>
+              {checked[i] && <Check className="w-3 h-3" strokeWidth={3} />}
             </span>
-            <span className={`text-[14px] leading-relaxed ${checked[i] ? "text-void-muted line-through" : "text-void-text"}`}>{t}</span>
+            <span className={`text-[14px] leading-relaxed ${checked[i] ? "text-ink-500 dark:text-ink-400 line-through" : "text-ink-800 dark:text-ink-100"}`}>{t}</span>
           </button>
         </li>
       ))}
@@ -125,37 +115,28 @@ export function Checklist({ items, storageKey }: { items: string[]; storageKey?:
   );
 }
 
-export function ScriptBox({ title, children }: { title?: string; children: ReactNode }) {
+export function ScriptBox({ children, label = "낭독" }: { children: ReactNode; label?: string }) {
   return (
-    <div className="relative p-5 md:p-7 my-6 rounded-2xl border border-neon-gold/30 bg-gradient-to-br from-[rgba(255,209,102,0.06)] to-[rgba(255,79,216,0.04)]">
-      <div className="absolute -top-3 left-5 px-2.5 py-0.5 text-[10px] uppercase tracking-[0.25em] text-neon-gold bg-void-bg border border-neon-gold/30 rounded-full">
-        {title ?? "Script"}
-      </div>
-      <div className="text-void-ink text-[16px] md:text-lg font-serif leading-[1.9]">{children}</div>
-    </div>
+    <figure className="relative my-7 rounded-2xl border border-ink-200 dark:border-ink-800 bg-paper-alt dark:bg-ink-800/30 p-6 md:p-8">
+      <span className="absolute -top-3 left-6 px-2.5 py-0.5 text-[10px] uppercase tracking-[0.2em] text-brand bg-paper dark:bg-night border border-ink-200 dark:border-ink-800 rounded-full font-semibold">{label}</span>
+      <div className="serif-kr text-[17px] md:text-[19px] leading-[1.9] text-ink-900 dark:text-ink-50">{children}</div>
+    </figure>
   );
 }
 
-export function Pair({ left, right, leftTitle = "❌ 금지", rightTitle = "✅ 권장" }: { left: ReactNode; right: ReactNode; leftTitle?: string; rightTitle?: string }) {
+export function Pair({ left, right, leftTitle = "말하지 않기", rightTitle = "대신 이렇게" }: {
+  left: ReactNode; right: ReactNode; leftTitle?: string; rightTitle?: string;
+}) {
   return (
-    <div className="grid md:grid-cols-2 gap-3 my-4">
-      <div className="void-card p-4 border-red-400/30">
-        <div className="text-[11px] uppercase tracking-[0.25em] text-red-400 mb-1.5">{leftTitle}</div>
-        <div className="text-void-text text-[14px]">{left}</div>
+    <div className="grid md:grid-cols-2 gap-3 my-5">
+      <div className="card p-4">
+        <div className="text-[10.5px] uppercase tracking-[0.2em] text-ink-500 mb-1.5 font-semibold">{leftTitle}</div>
+        <div className="text-ink-700 dark:text-ink-200 text-[14px] leading-relaxed">{left}</div>
       </div>
-      <div className="void-card p-4 border-neon-lime/30">
-        <div className="text-[11px] uppercase tracking-[0.25em] text-neon-lime mb-1.5">{rightTitle}</div>
-        <div className="text-void-text text-[14px]">{right}</div>
+      <div className="card p-4 border-brand-100 bg-brand-50 dark:bg-[rgba(255,107,53,0.06)] dark:border-[rgba(255,107,53,0.25)]">
+        <div className="text-[10.5px] uppercase tracking-[0.2em] text-brand mb-1.5 font-semibold">{rightTitle}</div>
+        <div className="text-ink-800 dark:text-ink-100 text-[14px] leading-relaxed">{right}</div>
       </div>
-    </div>
-  );
-}
-
-export function StepPill({ n, label }: { n: number; label: string }) {
-  return (
-    <div className="inline-flex items-center gap-2 chip neon">
-      <span className="font-mono text-neon-cyan">{n.toString().padStart(2, "0")}</span>
-      <span className="text-void-ink text-[12px]">{label}</span>
     </div>
   );
 }
@@ -163,19 +144,18 @@ export function StepPill({ n, label }: { n: number; label: string }) {
 export function Tabs({ tabs }: { tabs: { label: string; content: ReactNode }[] }) {
   const [i, setI] = useState(0);
   return (
-    <div className="my-5">
-      <div className="flex flex-wrap gap-2 border-b border-void-line mb-4">
+    <div className="my-6">
+      <div className="flex flex-wrap gap-1 border-b border-ink-200 dark:border-ink-800 mb-4">
         {tabs.map((t, idx) => (
-          <button
-            key={idx}
-            onClick={() => setI(idx)}
-            className={`px-4 py-2 text-[13px] border-b-2 transition-all ${i === idx ? "text-neon-cyan border-neon-cyan" : "text-void-muted border-transparent hover:text-void-ink"}`}
-          >
+          <button key={idx} onClick={() => setI(idx)}
+            className={`px-4 py-2.5 text-[13px] font-semibold border-b-2 transition ${
+              i === idx ? "text-brand border-brand" : "text-ink-500 dark:text-ink-400 border-transparent hover:text-ink-800 dark:hover:text-ink-100"
+            }`}>
             {t.label}
           </button>
         ))}
       </div>
-      <motion.div key={i} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
+      <motion.div key={i} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25 }}>
         {tabs[i].content}
       </motion.div>
     </div>
@@ -184,25 +164,35 @@ export function Tabs({ tabs }: { tabs: { label: string; content: ReactNode }[] }
 
 export function NextPrev({ prev, next }: { prev?: { href: string; label: string }; next?: { href: string; label: string } }) {
   return (
-    <div className="mt-12 flex flex-col md:flex-row gap-3 justify-between">
+    <div className="mt-14 grid md:grid-cols-2 gap-3">
       {prev ? (
-        <Link href={prev.href} className="void-card p-4 flex items-center gap-2 text-void-muted hover:text-void-ink transition">
-          <ChevronRight className="w-4 h-4 rotate-180" />
+        <Link href={prev.href} className="card card-hover p-4 flex items-center gap-3">
+          <ChevronRight className="w-4 h-4 rotate-180 text-ink-400" />
           <div>
-            <div className="text-[10px] uppercase tracking-[0.25em]">Prev</div>
-            <div className="text-void-ink text-sm">{prev.label}</div>
+            <div className="text-[10px] uppercase tracking-[0.2em] text-ink-500">이전</div>
+            <div className="text-ink-900 dark:text-ink-50 text-sm font-semibold">{prev.label}</div>
           </div>
         </Link>
-      ) : <div />}
+      ) : <div className="hidden md:block" />}
       {next ? (
-        <Link href={next.href} className="void-card p-4 flex items-center gap-2 text-void-muted hover:text-void-ink transition md:text-right">
+        <Link href={next.href} className="card card-hover p-4 flex items-center justify-end gap-3 text-right">
           <div>
-            <div className="text-[10px] uppercase tracking-[0.25em]">Next</div>
-            <div className="text-void-ink text-sm">{next.label}</div>
+            <div className="text-[10px] uppercase tracking-[0.2em] text-ink-500">다음</div>
+            <div className="text-ink-900 dark:text-ink-50 text-sm font-semibold">{next.label}</div>
           </div>
-          <ChevronRight className="w-4 h-4" />
+          <ChevronRight className="w-4 h-4 text-brand" />
         </Link>
-      ) : <div />}
+      ) : <div className="hidden md:block" />}
+    </div>
+  );
+}
+
+export function Metric({ label, value, sub }: { label: string; value: string; sub?: string }) {
+  return (
+    <div className="card p-5">
+      <div className="text-[11px] uppercase tracking-[0.2em] text-ink-500 mb-1.5 font-semibold">{label}</div>
+      <div className="serif-kr text-2xl md:text-3xl text-ink-900 dark:text-ink-50 font-bold">{value}</div>
+      {sub && <div className="text-[12.5px] text-ink-500 dark:text-ink-400 mt-1.5">{sub}</div>}
     </div>
   );
 }

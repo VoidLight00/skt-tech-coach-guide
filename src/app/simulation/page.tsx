@@ -2,209 +2,189 @@
 
 import { PageFrame, Section, Card, Callout, Quote, NextPrev } from "@/components/ui";
 import { motion } from "framer-motion";
-import { Clock, Eye, Headphones, Lightbulb, AlertTriangle } from "lucide-react";
 
 type Scene = {
-  n: number;
-  time: string;
-  title: string;
-  badge?: string;
-  see: string[];
-  hear?: string[];
-  moves: string[];
-  best: string;
-  trap?: string;
-  persona?: { name: string; desc: string }[];
-  workText?: string;
+  n: number; time: string; title: string; note?: string;
+  see: string[]; hear?: string[]; moves: string[]; best: string; trap?: string;
+  persona?: { name: string; desc: string }[]; workText?: string;
 };
 
 const SCENES: Scene[] = [
   {
-    n: 0, time: "14:30", title: "입장, 세팅 (당신이 도착)",
+    n: 0, time: "14:30 무렵", title: "도착과 세팅",
     see: [
-      "SKT 교육장. 테이블 5~6개, 각 4~5명.",
-      "실무자들은 오전 CEO 타운홀 + 13시부터 Step 1~3 달려온 상태. 에너지 낮음.",
-      "일부 팀은 Step 3 덜 채움. 카페인 들이붓는 중.",
-      "박준·재엽·박한규 매니저가 세팅 중.",
+      "교육장에는 테이블 대여섯 개가 놓여 있고, 각 테이블에 네댓 명이 앉아 있다.",
+      "모두 오전 타운홀을 끝내고 오후 두 시간을 달려 온 상태다. 에너지는 낮고, 커피가 빠르게 줄어든다.",
+      "몇 팀은 Step 3를 아직 다 채우지 못한 채 노트북을 붙잡고 있다.",
     ],
     moves: [
-      "박준과 30초 싱크 — 담당 테이블·순서·Step 3 미완 팀",
-      "노트북 세팅 — 시연 탭 4개 (ChatGPT/Claude/Gemini/NotebookLM)",
-      "클라우드 노트핀 ON + 음성 인식 시험",
-      "치트시트·펜·타이머 손 닿는 자리",
+      "박준 코치와 30초 안에 담당 테이블과 순서를 정한다.",
+      "시연용 탭 네 개를 모두 띄워 두고, 확장 기능은 꺼둔다.",
+      "녹음기를 켜 5분간 짧은 테스트를 돌린다.",
+      "치트시트와 펜, 타이머를 손이 닿는 자리에 둔다.",
     ],
-    best: "도착하자마자 실무자에게 말 걸지 않기. 미니특강 생략 고지 전에 기대치 먼저 올라가면 안 됨. 눈인사만.",
+    best: "도착하자마자 실무자에게 말을 걸지 않는다. 미니 강의가 없다는 소식을 전하기 전에 기대치가 올라가면 곤란하다.",
   },
   {
-    n: 1, time: "14:50~15:00", title: "코치 3인 싱크 & 전체 인사 (미니특강 생략)",
-    badge: "미니특강 없음",
+    n: 1, time: "14:50에서 15:00", title: "세 명의 코치가 모인다", note: "미니 강의는 생략되었다",
     see: [
-      "미니특강 없음. 박준·재엽·상현이 뒤쪽에서 10분 스탠드업.",
-      "박준: &ldquo;타운홀 때문에 오후 압축. 미니특강 생략, 바로 들어갑니다.&rdquo;",
-      "운영팀이 15:00 정각 &ldquo;이제 코치님들이 돌아가며 코칭해주실 거예요&rdquo; 1분 안내.",
-      "각 코치가 담당 테이블로 걸어간다.",
+      "강의실 뒤쪽에서 박준, 재엽, 상현이 10분 동안 짧게 선다.",
+      "박준이 타운홀 때문에 오후가 압축되었음을 전하고, 미니 강의는 생략한다고 공지한다.",
+      "15시 정각, 운영 담당자가 ‘이제부터 코치님이 테이블을 돌아다니며 코칭하시겠다’고 알린다.",
     ],
     moves: [
-      "담당 테이블 확정 (상현 A·B·C / 재엽 D·E / 박준 F·스윙바이)",
-      "미니특강 생략분 전달 방식 합의 — &lsquo;1분 압축 프레임워크&rsquo;",
-      "Step 3 미완 팀 대응 — 코칭 초반 3~5분 보완",
-      "사내 tool 질문 에스컬레이션 방식",
+      "담당 테이블을 최종적으로 나눈다. 세 명 중 누가 어느 팀을 먼저 만날지 정한다.",
+      "미니 강의가 빠진 자리에 각자 팀 앞에서 30초짜리 뼈대를 깔기로 합의한다.",
+      "Step 3를 다 채우지 못한 팀이 어느 팀인지 서로 공유한다.",
+      "사내 도구 관련 질문은 메모만 하고 박준에게 모으기로 한다.",
     ],
-    best: "15:00 정각에 가장 먼저 배정된 테이블로 자연스럽게 걸어가기. 망설이면 팀도 망설인다.",
-    trap: "미니특강 생략됐다고 프레임워크도 생략하지 말 것. 팀은 프레임워크를 전혀 모르는 상태로 Step 4 앞에 앉아 있음.",
+    best: "15시 정각에 가장 먼저 배정된 테이블로 자연스럽게 걸어간다. 잠깐의 공백을 코치가 먼저 채우는 편이 낫다.",
+    trap: "미니 강의가 생략되었다고 뼈대마저 생략하지 않는다. 팀은 프레임워크 없이 Step 4 앞에 앉아 있다.",
   },
   {
-    n: 2, time: "15:00~15:27", title: "팀 A · 마케팅팀 진입 (27분)",
-    badge: "자동화 욕심 vs 보안 우려",
+    n: 2, time: "15:00에서 15:27", title: "A 테이블, 마케팅팀",
+    note: "자동화를 향한 욕심과 보안에 대한 의심이 함께 있다",
     persona: [
-      { name: "김대리 (36, 마케팅 기획)", desc: "적극적, AI 기대 큼, 자동화 욕심" },
-      { name: "이주임 (28, 데이터)", desc: "조용, 엑셀·GA 잘 다룸" },
-      { name: "박과장 (42, 브랜드)", desc: "회의적, 팔짱" },
-      { name: "정대리 (33, 디지털)", desc: "중립" },
+      { name: "김대리 (36, 마케팅 기획)", desc: "적극적이고 AI에 대한 기대가 크다. 자동화 욕심이 있다." },
+      { name: "이주임 (28, 데이터)", desc: "조용하지만 엑셀과 GA에 밝다." },
+      { name: "박과장 (42, 브랜드)", desc: "회의적이다. 팔짱을 끼고 있다." },
+      { name: "정대리 (33, 디지털)", desc: "중립적이다." },
     ],
-    workText: "월간 캠페인 성과 리포트. 채널 5개, 엑셀 탭 12개, 월말 72시간 야근.",
-    see: [
-      "김대리 기대 찬 눈. 박과장 팔짱 그대로.",
-      "워크시트 Step 1~3 채워진 상태. Pain: '수치 모으기 이틀 + PPT 만들기 이틀'",
-    ],
+    workText: "월간 캠페인 성과 리포트. 채널 다섯, 엑셀 탭 열두 개. 월말 야근 72시간.",
+    see: ["김대리는 기대하는 눈, 박과장은 팔짱을 그대로 유지한다.", "워크시트의 Step 1~3은 채워져 있다. Pain은 ‘수치 모으기 이틀, PPT 이틀’."],
     hear: [
-      "김대리: &ldquo;채널 다섯 개라 엑셀 탭 12개. AI로 한 번에 자동화 가능할까요?&rdquo;",
-      "박과장 (회의적): &ldquo;근데 저희 성과 수치 대외비인데… 밖에 AI 올리면 안 되는 거 아닌가요?&rdquo;",
+      "김대리: 채널이 다섯 개라 엑셀 탭이 12개예요. AI로 한 번에 자동화가 가능할까요.",
+      "박과장: 그런데 저희 성과 수치는 대외비라서, 외부 AI에 올리면 안 되는 거 아닌가요.",
     ],
     moves: [
-      "① 자기소개 + 시간 공지 + 1분 압축 프레임워크",
-      "② 민감도 질문 먼저 → 박과장 안심",
-      "③ Workflow 7단계 쪼개기 — 공동 언어 만들기",
-      "④ 암묵지 드릴 — &lsquo;감&rsquo; 3개를 말로 풀어 옆 사람이 받아적게",
-      "⑤ R6 시연 — 익명화 샘플 3x10 → ChatGPT 파이썬 스크립트",
-      "⑥ 정리 — &lsquo;가장 먼저 시도&rsquo; 칸 직접 가리키며 적게",
+      "자기소개와 시간 공지, 뼈대 세 가지를 30초 안에 깐다.",
+      "박과장의 질문을 먼저 받는다. 민감도 확인이 대화의 첫 번째다.",
+      "업무를 일곱 단계로 함께 쪼갠다. 공동의 언어를 만든다.",
+      "암묵지를 묻는다. 감으로 판단하는 세 가지를 풀어 보도록 하고, 옆 사람이 받아적게 한다.",
+      "익명화된 샘플로 R6을 시연한다. ChatGPT에 컬럼 설명과 목적을 주고, 파이썬 스크립트를 받아 온다.",
+      "‘가장 먼저 시도해 볼 수 있는 것’ 칸을 직접 가리키며, 실무자 손으로 한 줄 적게 한다.",
     ],
-    best: "화이트보드(또는 워크시트 여백)에 세 칸 그리기: [민감도 하/중/상] 대응 전략. &ldquo;오늘 중요한 첫 번째 질문은 어디를 자동화할지가 아니라 어디까지 외부를 쓸지예요.&rdquo;",
-    trap: "n8n 바로 제안 금지 · 박과장 질문을 &lsquo;괜찮아요&rsquo;로 넘기지 말 것 · 20분 초과 시 17분 시점 마무리 고지",
+    best: "워크시트 여백에 민감도 세 층을 즉석에서 그린다. ‘오늘 중요한 첫 질문은 어디를 자동화할지가 아니라, 어디까지 외부를 쓸지입니다.’",
+    trap: "n8n을 바로 제안하지 않는다. 박과장의 질문을 ‘괜찮아요’로 넘기지 않는다. 17분이 넘어가면 마무리를 예고한다.",
   },
   {
-    n: 3, time: "15:27~15:55", title: "팀 B · 재무팀 진입 (28분)",
-    badge: "의심 많은 과장 · 정석 R9",
+    n: 3, time: "15:27에서 15:55", title: "B 테이블, 재무팀",
+    note: "의심이 많다. R9의 정석이 필요하다",
     persona: [
-      { name: "최과장 (45, 재무)", desc: "차분·의심·보안 민감, 팔짱" },
-      { name: "윤대리 (34, 회계)", desc: "수치에 강함" },
-      { name: "한주임 (29, 재무기획)", desc: "조용" },
+      { name: "최과장 (45, 재무)", desc: "차분하고 의심이 많다. 보안에 민감하다." },
+      { name: "윤대리 (34, 회계)", desc: "수치에 밝다." },
+      { name: "한주임 (29, 재무기획)", desc: "조용하다." },
     ],
-    workText: "분기별 재무 데이터 이상치 탐지 → IR 자료 초안. &lsquo;튀는 숫자&rsquo;를 감으로 찾음.",
-    see: ["최과장 팔짱. 윤대리가 노트북 준비.", "Step 3 촘촘하게 채워짐. 근거 기준은 공란."],
-    hear: ["최과장: &ldquo;AI에 재무 데이터 올리면 바로 학습에 쓰이는 거 아닌가요? 저희는 그래서 안 쓰고 있어요.&rdquo;"],
+    workText: "분기별 재무 데이터의 이상치를 탐지해 IR 자료의 초안을 만든다. 기준의 근거가 문서화되어 있지 않다.",
+    see: ["최과장은 팔짱을 풀지 않는다. 윤대리가 노트북을 준비한다.", "Step 3는 촘촘하게 채워져 있으나, ‘튀는 이유’는 비어 있다."],
+    hear: ["최과장: AI에 재무 데이터를 올리면 바로 학습에 쓰이는 거 아닌가요. 그래서 저희는 쓰지 못하고 있습니다."],
     moves: [
-      "① 프레임워크 압축 스크립트",
-      "② 보안 의심을 정확히 인정 + 2가지 방법 제시 (기업용/더미)",
-      "③ 암묵지 드릴 — &ldquo;어떤 숫자가 튄다고 판단하세요?&rdquo; → 한주임이 받아적기",
-      "④ 병렬 운영 — ChatGPT에 R9 프롬프트 던지고 옆 팀 스윙바이 30초",
-      "⑤ 사내 파이썬 환경 질문 → 고정 스크립트 + 메모",
+      "뼈대 세 가지를 30초에 깐다.",
+      "최과장의 의심을 정확히 인정한 뒤, 두 갈래 길을 제시한다. 기업용 요금제 또는 더미 데이터.",
+      "‘어떤 숫자를 튄다고 판단하시나요’를 묻고, 한주임이 받아적게 한다.",
+      "ChatGPT에 R9 프롬프트를 넣어 두고, 그 대기 시간에 다른 팀을 30초 스윙바이한다.",
+      "사내의 파이썬 환경에 대한 질문이 오면, ‘잘 모르겠습니다. 확인 후 안내드리겠습니다’로 받는다.",
     ],
-    best: "최과장 첫 질문을 &ldquo;맞아요&rdquo;로 시작하기. 그리고 R9 전략을 다이어그램으로 즉석 그리기.",
-    trap: "&ldquo;괜찮습니다 학습 안 돼요&rdquo; 같은 반쯤 맞는 답으로 얼버무리지 말 것",
+    best: "최과장의 첫 문장을 ‘맞습니다’로 받는다. R9의 흐름을 즉석에서 간단한 도식으로 그린다.",
+    trap: "‘괜찮습니다, 학습에는 쓰이지 않아요’처럼 반쯤 맞는 답을 던지지 않는다.",
   },
   {
-    n: 4, time: "15:55~16:25", title: "팀 C · 상품전략팀 진입 (30분 · 어려운 팀)",
-    badge: "자신감 낮음 · 성공 경험 만들기",
+    n: 4, time: "15:55에서 16:25", title: "C 테이블, 상품전략팀",
+    note: "자신감이 낮은 팀이다. 작은 성공을 먼저 만든다",
     persona: [
-      { name: "이주임 (30, 상품전략)", desc: "머뭇거림·자신감 낮음" },
-      { name: "다른 3명", desc: "조용, 서로 눈치" },
+      { name: "이주임 (30, 상품전략)", desc: "말끝이 흐리다. 자신감이 낮다." },
+      { name: "다른 세 명", desc: "조용하고 서로 눈치를 본다." },
     ],
-    workText: "경쟁사 상품 스펙 비교표 업데이트. 매주 반복. Step 3가 3줄뿐.",
-    see: ["워크시트 비어있음 · 이주임이 눈 마주치지 못함"],
-    hear: ["이주임: &ldquo;저희는 AI로 뭘 해야 할지 잘 모르겠어요. 업무가 그냥 계속 비교표 만드는 건데…&rdquo;"],
+    workText: "경쟁사 상품 스펙 비교표를 매주 업데이트한다. Step 3가 세 줄에서 멈춰 있다.",
+    see: ["워크시트는 비어 있고, 이주임은 눈을 잘 마주치지 못한다."],
+    hear: ["이주임: 저희는 AI로 뭘 해야 할지 잘 모르겠어요. 그냥 계속 비교표 만드는 업무여서요."],
     moves: [
-      "① 프레임워크 압축 + 시간 여유 있음을 어필",
-      "② &ldquo;지난주에 실제로 하신 한 건만 풀어주실 수 있어요?&rdquo;",
-      "③ 코치가 5단계로 대신 쪼개주기 — 구조화 대행",
-      "④ R2 비교 시연 — Claude로 경쟁사 A·B 요금제 변경점 표 (30초)",
-      "⑤ 핵심 숙제 주기 — &ldquo;중요한 변화가 뭔가&rdquo; 본인 기준 3개 적기",
+      "뼈대를 가볍게 깔고, 오늘의 시간이 넉넉하다는 톤을 먼저 보여 준다.",
+      "‘지난주에 실제로 하신 한 건만 풀어 주실 수 있을까요’라고 묻는다.",
+      "듣고 나서, 다섯 단계로 함께 정리해 주며 구조를 대신 만들어 준다.",
+      "R2를 30초 시연한다. Claude에 경쟁사 A와 B의 요금제를 붙여 변경된 조건만 표로 받는다.",
+      "‘중요한 변화가 무엇인가’에 대한 본인 기준 세 가지를 적는 것을 오늘의 숙제로 남긴다.",
     ],
-    best: "이주임 혼자 말하게 두지 말 것. 중간에 &ldquo;XX님은 이 단계 뭐가 제일 힘드세요?&rdquo; 질문 돌리기.",
-    trap: "&ldquo;간단하네요 바로 해보세요&rdquo; → 자신감 낮은 팀엔 부담. &lsquo;오늘 15분 안에 하나 성공&rsquo;으로 설계.",
+    best: "이주임 혼자 말하게 두지 않는다. 중간에 다른 분들에게도 ‘이 단계에서 가장 힘드신 점이 무엇인가요’라고 질문을 돌린다.",
+    trap: "‘간단합니다, 바로 해보세요’는 자신감 낮은 팀에게는 부담이다. 15분 안에 하나의 작은 성공을 설계한다.",
   },
   {
-    n: 5, time: "16:25~17:00", title: "순회 2차 · Step 5 시작",
-    see: ["박한규 매니저: &lsquo;16:45부터 Step 5 마무리 들어갈게요&rsquo; 안내", "세 팀 다 1회씩 돌았음"],
+    n: 5, time: "16:25에서 17:00", title: "두 번째 순회",
+    see: ["운영 담당자가 ‘16:45부터 Step 5 마무리로 들어가겠다’고 안내한다.", "세 팀을 모두 한 번씩 다녀온 상태다."],
     moves: [
-      "담당 세 팀 빠르게 한 번씩 스윙바이",
-      "&ldquo;&lsquo;가장 먼저 시도&rsquo; 칸 적으셨어요?&rdquo; 확인",
-      "안 적힌 팀은 즉석 1분 함께 적기",
-      "★☆☆ 난이도인지 확인 (★★☆ 이상이면 '2번째로')",
+      "담당 세 팀을 빠르게 한 번씩 다시 스윙바이한다.",
+      "‘가장 먼저 시도해 볼 수 있는 것’ 칸이 채워졌는지를 확인한다.",
+      "비어 있으면 1분 안에 함께 적고 자리를 뜬다.",
+      "난이도가 도구 학습 이상이면 두 번째로 미루도록 조정한다.",
     ],
-    best: "각 팀에 3~4줄 피드백 카드: 팀 A는 엑셀 통합 스크립트 / 팀 B는 이상탐지 규칙 3개 명문화 / 팀 C는 본인 중요도 기준 추가",
+    best: "각 팀에게 세 줄짜리 피드백 카드를 남긴다. 엑셀 통합 스크립트, 이상 탐지 규칙의 명문화, 중요도 기준 세 가지.",
   },
   {
-    n: 6, time: "17:00~17:30", title: "전체 공유 · 마무리",
+    n: 6, time: "17:00에서 17:30", title: "전체 공유와 마무리",
     see: [
-      "각 테이블 대표에게 1분 공유 돌림",
-      "실무자들 처음보다 눈빛 또렷. &lsquo;할 수 있겠다&rsquo;는 느낌",
-      "박준 마무리 멘트",
+      "각 테이블의 대표가 1분씩 공유한다.",
+      "실무자들의 눈빛이 처음보다 또렷하다. ‘해볼 수 있겠다’는 표정이 돌아온다.",
+      "박준이 마무리 멘트를 한다.",
     ],
     moves: [
-      "녹음 정지, 파일명에 팀명+날짜",
-      "박준·재엽과 5분 스탠드업 — A·B·C 특이사항, 사내 환경 질문 1건",
-      "운영팀 다솜님께 인사",
-      "60-코칭-로그/20260421-화.md 열어 팀명·대표 업무·핵심 3줄만 빠르게 입력",
+      "녹음을 정지한다. 파일 이름에 팀명과 날짜를 붙인다.",
+      "박준·재엽과 5분 스탠드업. A·B·C 팀의 특이사항과 담당자에게 전달할 사내 도구 질문 한 건.",
+      "운영 담당자에게 인사를 남긴다.",
+      "코칭 로그를 열어 팀명·대표 업무·핵심 세 줄만 빠르게 남긴다. 상세한 정리는 귀가 후 STT로 이어간다.",
     ],
-    best: "끝나면 스스로에게: &lsquo;오늘 한 팀이라도 &apos;할 수 있겠다&apos; 느끼게 했으면 성공&rsquo;",
+    best: "끝나고 스스로에게 말한다. 오늘 한 팀이라도 ‘해볼 수 있겠다’고 느끼게 했다면, 그걸로 오늘은 성공이다.",
   },
 ];
 
 export default function SimulationPage() {
   return (
-    <PageFrame kicker="Simulation" title="현장 시뮬레이션 · Scene 0~6" accent="cyan"
-      subtitle="시간대별로 영상처럼 재생. 각 Scene마다 보이는 것·들리는 것·선택지·베스트 무브·함정.">
-      <Callout tone="warn" title="4/20 최신 변경 반영">
-        CEO 전사 타운홀로 오전 의무 참여 → 과정 시작 <strong>13:00</strong> → 13:00~15:00 Step 1~3 압축(2h) → 15:00~17:30 테크코치 2.5h · <strong>미니특강 생략</strong>
+    <PageFrame
+      eyebrow="08 · 현장 시뮬레이션"
+      title="시간대와 장면을 따라, 호흡을 먼저 예습한다."
+      lede="실전의 25분은 준비한 만큼 보인다. 각 장면의 보이는 것, 들리는 것, 그리고 움직여야 할 순서를 미리 머릿속에서 한 번 돌려본다."
+    >
+      <Callout title="현재 일정 정리">
+        오전 타운홀로 과정이 13시에 시작한다. Step 1에서 3을 두 시간 안에 달려 오고, 15시부터 17시 30분까지 테크코치가 합류한다. 미니 강의는 생략되었다.
       </Callout>
 
       <div className="my-10 space-y-10">
         {SCENES.map((s, idx) => <SceneBlock key={s.n} s={s} idx={idx} />)}
       </div>
 
-      <Section n={99} title="🧠 한 장 요약 — 당신이 기억할 리듬">
-        <Card>
-          <pre className="text-[12px] md:text-sm text-void-ink font-mono leading-[1.8] whitespace-pre-wrap">
-{`도착 14:30
-  → 코치 3인 스탠드업 · 도구 로그인 · 녹음 테스트
-14:50~15:00 코치 싱크 (10분)
-  → 담당 팀 · 미니특강 생략 대응 · Step 3 미완 팀 공유
-팀1 15:00~15:27 (27분)
-  → [1분 프레임워크 압축] → 민감도 → 구조화 → 데모 → 가장 먼저 시도
-팀2 15:27~15:55 (28분)
-  → 병렬 운영 (데모 대기 중 다른 팀 스윙바이)
-팀3 15:55~16:25 (30분)
-  → 어려운 팀: 구조화 대행 · 성공 경험 만들기
-순회 2차 16:25~17:00 (35분)
-  → 각 팀 돌아가며 Step 4 후반·Step 5 시작 점검
-Step 5 마무리 17:00~17:30 (30분)
-  → '가장 먼저 시도' 칸 확정 · 전체 공유 · 로그 입력`}
+      <Section n={9} title="한 장으로 기억하는 리듬">
+        <Card hover={false}>
+          <pre className="text-[13px] text-ink-800 dark:text-ink-100 font-mono leading-[1.9] whitespace-pre-wrap">
+{`14:30    도착, 세팅, 녹음 테스트
+14:50    코치 세 명이 선다. 담당 테이블과 순서
+15:00    첫 팀. 뼈대 30초, 민감도, 구조화, 시연, 최소 실행
+15:27    두 번째 팀. 시연 대기 동안 다른 팀 스윙바이
+15:55    세 번째 팀. 구조화를 대신 만들어 준다
+16:25    두 번째 순회. Step 4 후반과 Step 5 시작 점검
+17:00    Step 5 마무리. 모든 팀 최소 실행 한 줄 확정
+17:30    스탠드업, 로그 정리, 4월 23일에 반영할 한 줄`}
           </pre>
         </Card>
       </Section>
 
-      <Section n={100} title="🎭 감정 곡선 체크포인트">
-        <div className="space-y-2 text-[14px]">
-          <Quote by="15:30 — 긴장">심호흡 1회, 고정멘트 신뢰.</Quote>
-          <Quote by="15:40 — &lsquo;자동화!&rsquo; 외침 들림">속도 늦추기, 민감도 먼저.</Quote>
-          <Quote by="16:00 — 반응 시원찮음">당황 말고 &lsquo;시간 많이 쓰는 한 단계만&rsquo; 포커스.</Quote>
-          <Quote by="16:30 — 시간 모자람">&lsquo;가장 먼저 시도&rsquo; 칸 1개라도 확정하고 마무리.</Quote>
-          <Quote by="17:30 — 종료">&ldquo;오늘 한 팀이라도 &lsquo;할 수 있겠다&rsquo; 느끼게 했으면 성공&rdquo;</Quote>
-        </div>
+      <Section n={10} title="감정 곡선">
+        <Quote by="15:30 긴장이 올라온다">숨을 한 번. 고정된 문장들을 믿는다.</Quote>
+        <Quote by="15:40 ‘자동화!’라는 말이 들린다">속도를 늦추고, 민감도 질문으로 돌린다.</Quote>
+        <Quote by="16:00 반응이 시원찮다">당황하지 않고, 가장 시간이 많이 드는 한 단계만 남긴다.</Quote>
+        <Quote by="16:30 시간이 모자라는 느낌">‘가장 먼저 시도’ 한 줄이라도 확정하고 마무리한다.</Quote>
+        <Quote by="17:30 끝난다">오늘 한 팀이라도 ‘해볼 수 있겠다’고 느꼈다면, 그걸로 충분하다.</Quote>
       </Section>
 
-      <Section n={101} title="현장에서 파일 열지 않고 기억할 고정 스크립트 3개">
-        <Card className="border-neon-gold/40">
-          <ol className="space-y-4 text-void-ink text-lg font-serif leading-[1.8]">
-            <li>① &ldquo;<mark>녹음은 학습 자료로만 쓰고 이후 삭제</mark>&rdquo;</li>
-            <li>② &ldquo;<mark>잘 모르겠습니다, 확인 후 안내드리겠습니다</mark>&rdquo;</li>
-            <li>③ &ldquo;<mark>가장 먼저 시도해 볼 수 있는 것 하나만 오늘 정해요</mark>&rdquo;</li>
+      <Section n={11} title="파일을 열지 않아도 남아야 하는 세 문장">
+        <Card hover={false}>
+          <ol className="space-y-4 text-ink-900 dark:text-ink-50 serif-kr text-[18px] leading-[1.9]">
+            <li>녹음은 학습 자료로만 쓰고 이후 삭제합니다.</li>
+            <li>잘 모르겠습니다. 확인 후 안내드리겠습니다.</li>
+            <li>가장 먼저 시도해 볼 수 있는 것 하나만 오늘 정해요.</li>
           </ol>
         </Card>
       </Section>
 
-      <NextPrev prev={{ href: "/do-dont", label: "DO / DON'T" }} next={{ href: "/log", label: "코칭 로그" }} />
+      <NextPrev prev={{ href: "/do-dont", label: "원칙과 금지" }} next={{ href: "/log", label: "코칭 로그" }} />
     </PageFrame>
   );
 }
@@ -213,63 +193,60 @@ function SceneBlock({ s, idx }: { s: Scene; idx: number }) {
   return (
     <motion.section
       id={`scene-${s.n}`}
-      initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.6, delay: Math.min(idx * 0.05, 0.3) }}
+      initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.5, delay: Math.min(idx * 0.04, 0.2) }}
       className="relative"
     >
-      {/* Timeline rail */}
-      <div className="absolute left-5 md:left-7 top-0 bottom-0 w-[2px] bg-gradient-to-b from-neon-cyan via-neon-magenta to-transparent opacity-30 hidden md:block" />
-      <div className="flex gap-5 md:gap-10">
+      <div className="flex gap-5 md:gap-8">
         <div className="relative shrink-0 hidden md:block">
-          <div className="relative w-14 h-14 rounded-full bg-void-bg border-2 border-neon-cyan/60 flex items-center justify-center shadow-neon z-10">
-            <span className="textbook-h1 text-neon-cyan text-xl">{s.n}</span>
+          <div className="relative w-12 h-12 rounded-full bg-paper dark:bg-night border-2 border-brand flex items-center justify-center shadow-brand z-10">
+            <span className="serif-kr text-brand text-lg font-bold">{s.n}</span>
           </div>
+          {idx < 6 && <div className="absolute left-1/2 top-12 bottom-[-40px] w-[2px] bg-gradient-to-b from-brand/40 to-transparent -translate-x-1/2" />}
         </div>
         <div className="flex-1 min-w-0">
-          <div className="flex flex-wrap items-center gap-2 mb-3">
-            <span className="chip neon"><Clock className="w-3 h-3" /> {s.time}</span>
-            {s.badge && <span className="chip magenta">{s.badge}</span>}
+          <div className="flex flex-wrap items-center gap-2 mb-2">
+            <span className="font-mono text-[11px] text-brand font-semibold">{s.time}</span>
+            {s.note && <span className="text-[11px] text-ink-500 dark:text-ink-400 italic">· {s.note}</span>}
           </div>
-          <h2 className="textbook-h2 text-2xl md:text-3xl text-void-ink mb-5">Scene {s.n} · {s.title}</h2>
+          <h2 className="serif-kr text-[22px] md:text-[26px] font-bold tracking-tight text-ink-900 dark:text-ink-50 mb-4">장면 {s.n}. {s.title}</h2>
 
           {s.persona && (
-            <div className="void-card p-4 mb-4">
-              <div className="text-[11px] uppercase tracking-[0.2em] text-neon-cyan mb-2">👥 팀 구성</div>
-              <ul className="grid md:grid-cols-2 gap-x-6 gap-y-1 text-[13px] text-void-text">
-                {s.persona.map((p) => (<li key={p.name}><strong className="text-void-ink">{p.name}</strong> · {p.desc}</li>))}
+            <Card hover={false} className="mb-4">
+              <div className="text-[11px] uppercase tracking-[0.18em] text-brand font-semibold mb-2">팀 구성</div>
+              <ul className="grid md:grid-cols-2 gap-x-6 gap-y-1.5 text-[13.5px] text-ink-700 dark:text-ink-200">
+                {s.persona.map((p) => <li key={p.name}><span className="font-semibold text-ink-900 dark:text-ink-50">{p.name}</span> · {p.desc}</li>)}
               </ul>
-              {s.workText && <div className="mt-3 text-[13px] text-void-muted">📝 워크시트: {s.workText}</div>}
-            </div>
+              {s.workText && <div className="mt-3 text-[13px] text-ink-600 dark:text-ink-300 italic">워크시트: {s.workText}</div>}
+            </Card>
           )}
 
           <div className="grid md:grid-cols-2 gap-3">
             <Card>
-              <div className="flex items-center gap-2 mb-2"><Eye className="w-4 h-4 text-neon-cyan" /><div className="text-[11px] uppercase tracking-[0.2em] text-neon-cyan">보이는 것</div></div>
-              <ul className="space-y-1.5 text-[13px] text-void-text list-disc pl-5">
-                {s.see.map((x, i) => (<li key={i} dangerouslySetInnerHTML={{ __html: x }} />))}
+              <div className="text-[11px] uppercase tracking-[0.18em] text-brand font-semibold mb-2">보이는 것</div>
+              <ul className="space-y-1.5 text-[13.5px] text-ink-700 dark:text-ink-200 list-disc pl-5">
+                {s.see.map((x, i) => <li key={i}>{x}</li>)}
               </ul>
             </Card>
             {s.hear && (
               <Card>
-                <div className="flex items-center gap-2 mb-2"><Headphones className="w-4 h-4 text-neon-magenta" /><div className="text-[11px] uppercase tracking-[0.2em] text-neon-magenta">들리는 것</div></div>
-                <ul className="space-y-1.5 text-[13px] text-void-text list-disc pl-5">
-                  {s.hear.map((x, i) => (<li key={i} dangerouslySetInnerHTML={{ __html: x }} />))}
+                <div className="text-[11px] uppercase tracking-[0.18em] text-brand font-semibold mb-2">들리는 말</div>
+                <ul className="space-y-1.5 text-[13.5px] text-ink-700 dark:text-ink-200 list-disc pl-5">
+                  {s.hear.map((x, i) => <li key={i}>{x}</li>)}
                 </ul>
               </Card>
             )}
           </div>
 
           <Card className="mt-3">
-            <div className="flex items-center gap-2 mb-2"><Lightbulb className="w-4 h-4 text-neon-gold" /><div className="text-[11px] uppercase tracking-[0.2em] text-neon-gold">내 무브</div></div>
-            <ol className="space-y-1.5 text-[13px] text-void-text list-decimal pl-5">
-              {s.moves.map((m, i) => (<li key={i} dangerouslySetInnerHTML={{ __html: m }} />))}
+            <div className="text-[11px] uppercase tracking-[0.18em] text-brand font-semibold mb-2">움직임</div>
+            <ol className="space-y-1.5 text-[13.5px] text-ink-700 dark:text-ink-200 list-decimal pl-5">
+              {s.moves.map((m, i) => <li key={i}>{m}</li>)}
             </ol>
           </Card>
 
-          <Callout tone="ok" title="✅ 베스트 무브"><span dangerouslySetInnerHTML={{ __html: s.best }} /></Callout>
-          {s.trap && (
-            <Callout tone="danger" title="⚠️ 함정"><span dangerouslySetInnerHTML={{ __html: s.trap }} /></Callout>
-          )}
+          <Callout title="좋은 한 수">{s.best}</Callout>
+          {s.trap && <Callout title="놓치기 쉬운 곳"><span className="text-ink-700 dark:text-ink-200">{s.trap}</span></Callout>}
         </div>
       </div>
     </motion.section>

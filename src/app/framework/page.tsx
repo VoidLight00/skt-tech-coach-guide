@@ -6,119 +6,116 @@ import { ArrowRight } from "lucide-react";
 
 export default function FrameworkPage() {
   return (
-    <PageFrame kicker="Cheatsheet" title="프레임워크 치트시트" accent="lime"
-      subtitle="미니 강의가 생략되었으므로 코치가 이 프레임워크를 입에 담고 다녀야 한다. 암기가 아니라 &lsquo;리듬&rsquo;으로.">
-      <Section n={1} title="Part 1 · 업무 구조화 — 4단계">
-        <Card>
-          <div className="flex flex-wrap items-center justify-center gap-2 md:gap-4 py-6">
+    <PageFrame
+      eyebrow="04 · 프레임워크"
+      title="개념은 짧게 깔고, 말은 늘 같은 자리에 둔다."
+      lede="미니 강의가 빠진 자리를 채우기 위해 코치가 입에 들고 다녀야 할 것들이다. 외우는 것이 아니라, 리듬처럼 몸에 붙는 편이 좋다."
+    >
+      <Section n={1} title="업무는 네 단계로 본다">
+        <Card hover={false}>
+          <div className="flex flex-wrap items-center justify-center gap-2 md:gap-3 py-6">
             {["입력", "처리", "판단", "출력"].map((w, i) => (
-              <motion.div key={w} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.12 }} className="flex items-center gap-2 md:gap-3">
-                <div className={`px-5 md:px-7 py-3 md:py-4 rounded-xl border ${["cyan","cyan","magenta","gold"][i] === "cyan" ? "border-neon-cyan/40 text-neon-cyan" : ["cyan","cyan","magenta","gold"][i] === "magenta" ? "border-neon-magenta/40 text-neon-magenta" : "border-neon-gold/40 text-neon-gold"} font-serif text-xl md:text-2xl`}>
+              <motion.div key={w} initial={{ opacity: 0, y: 6 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }} className="flex items-center gap-2 md:gap-3">
+                <div className="px-5 md:px-7 py-3 md:py-4 rounded-xl border border-ink-200 dark:border-ink-800 bg-paper dark:bg-ink-800/30 serif-kr text-xl md:text-2xl font-bold text-ink-900 dark:text-ink-50">
                   {w}
                 </div>
-                {i < 3 && <ArrowRight className="w-4 h-4 text-void-muted" />}
+                {i < 3 && <ArrowRight className="w-4 h-4 text-ink-400" />}
               </motion.div>
             ))}
           </div>
-          <div className="text-center text-void-muted text-[13px]">
-            AI는 <strong className="text-neon-magenta">처리</strong>에 특화 · 사람은 <strong className="text-neon-gold">판단/승인</strong> 담당
-          </div>
+          <p className="text-center text-[14px] text-ink-600 dark:text-ink-300">
+            AI가 잘하는 곳은 <span className="text-brand font-semibold">처리</span>, 사람이 남아야 하는 곳은 <span className="text-brand font-semibold">판단</span>.
+          </p>
         </Card>
       </Section>
 
-      <Section n={2} title="Part 2 · 데이터 점검 5가지">
+      <Section n={2} title="데이터를 들여다보는 다섯 가지 질문">
         <CardGrid cols={5}>
           {[
-            ["접근성", "데이터에 접근할 수 있는가?"],
-            ["형식", "AI가 읽을 수 있는 형식인가?"],
-            ["정리 상태", "구조화되어 있는가?"],
-            ["최신성", "최신이고 정확한가?"],
-            ["민감도", "외부 AI에 넣어도 되는가?"],
+            ["접근성", "지금 이 데이터에 접근할 수 있는가."],
+            ["형식", "AI가 읽을 수 있는 모양인가."],
+            ["정리", "구조가 잡혀 있는가."],
+            ["최신성", "오래된 것은 아닌가."],
+            ["민감도", "외부 AI에 올려도 되는가."],
           ].map(([t, q], i) => (
-            <motion.div key={t} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}>
+            <motion.div key={t} initial={{ opacity: 0, y: 6 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}>
               <Card className="h-full">
-                <div className="text-[10px] font-mono text-neon-cyan mb-1">0{i + 1}</div>
-                <div className="textbook-h2 text-void-ink text-base">{t}</div>
-                <p className="text-[12px] text-void-muted mt-2 leading-relaxed">{q}</p>
+                <div className="font-mono text-[11px] text-brand mb-1">0{i + 1}</div>
+                <div className="serif-kr text-[17px] font-bold text-ink-900 dark:text-ink-50 mb-1.5">{t}</div>
+                <p className="text-[12.5px] text-ink-600 dark:text-ink-300 leading-relaxed">{q}</p>
               </Card>
             </motion.div>
           ))}
         </CardGrid>
-        <Callout tone="info">
-          데이터가 &lsquo;AI-readable&rsquo;하지 않으면 → 마크다운 변환/OCR(사이오닉 AI 등) 선행.
-        </Callout>
+        <Callout>데이터가 읽히지 않는 형식으로 묶여 있다면, 본 분석 전에 마크다운으로 바꾸는 일이 먼저다. OCR을 포함한 변환 레시피는 <a href="/recipes">R5</a>에 따로 적어두었다.</Callout>
       </Section>
 
-      <Section n={3} title="Part 3 · 구현 난이도 3단계">
+      <Section n={3} title="세 층의 난이도">
         <CardGrid cols={3}>
           {[
-            { s: "★☆☆", t: "바로 시도", e: "LLM에 직접 질문/요청", n: "오늘부터 바로", c: "lime" },
-            { s: "★★☆", t: "도구 학습 필요", e: "RAG 세팅, 데이터 분석 도구", n: "일주일만 투자", c: "gold" },
-            { s: "★★★", t: "개발 필요", e: "에이전트 워크플로우, API 연동", n: "팀 협업/외부 지원", c: "magenta" },
-          ].map((s, i) => {
-            const col = s.c === "lime" ? "text-neon-lime border-neon-lime/40" : s.c === "gold" ? "text-neon-gold border-neon-gold/40" : "text-neon-magenta border-neon-magenta/40";
-            return (
-              <motion.div key={i} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}>
-                <Card className={`h-full border-l-4 ${col.split(" ")[1]}`}>
-                  <div className={`text-2xl ${col.split(" ")[0]}`}>{s.s}</div>
-                  <div className="textbook-h2 text-void-ink text-lg mt-2">{s.t}</div>
-                  <div className="text-[12px] text-void-muted mt-1">{s.e}</div>
-                  <div className="text-[12px] text-void-text mt-3 italic">&ldquo;{s.n}&rdquo;</div>
-                </Card>
-              </motion.div>
-            );
-          })}
-        </CardGrid>
-      </Section>
-
-      <Section n={4} title="Part 4 · AI가 잘하는 9가지 역할" desc="실무자가 &lsquo;구현을 모르겠다&rsquo;고 하면 이 카드 매칭부터.">
-        <CardGrid cols={3}>
-          {["검색", "분류", "요약", "초안 생성", "비교검토", "이상감지", "계획", "작업연결", "도구실행"].map((r, i) => (
-            <motion.div key={r} initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.05 }}>
-              <Card className="text-center py-6">
-                <div className="font-mono text-[10px] text-neon-cyan mb-1">0{i + 1}</div>
-                <div className="textbook-h2 text-void-ink text-lg">{r}</div>
+            { s: "★☆☆", t: "바로 시도", e: "LLM에 직접 요청한다. 특별한 준비가 없다.", n: "오늘 돌아가 한 시간이면 된다." },
+            { s: "★★☆", t: "도구 학습", e: "RAG를 세팅하거나 분석 도구를 익힌다.", n: "주말 반나절 정도의 투자가 필요하다." },
+            { s: "★★★", t: "개발 필요", e: "에이전트나 API 연동을 구축한다.", n: "팀의 힘이나 외부 개발자의 손이 필요하다." },
+          ].map((s, i) => (
+            <motion.div key={i} initial={{ opacity: 0, y: 6 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
+              <Card className="h-full">
+                <div className="font-mono text-brand text-lg mb-1">{s.s}</div>
+                <div className="serif-kr text-[19px] font-bold text-ink-900 dark:text-ink-50 mb-1">{s.t}</div>
+                <p className="text-[13px] text-ink-600 dark:text-ink-300 leading-relaxed">{s.e}</p>
+                <p className="mt-3 text-[13px] text-ink-700 dark:text-ink-200 italic serif-kr">{s.n}</p>
               </Card>
             </motion.div>
           ))}
         </CardGrid>
       </Section>
 
-      <Section n={5} title="Part 5 · 5가지 구현 방식">
+      <Section n={4} title="AI가 잘하는 아홉 가지 역할">
+        <p className="text-[14px] text-ink-600 dark:text-ink-300 leading-relaxed mb-4 max-w-[600px]">구현 방식을 가늠하지 못하는 팀에게는 이 카드 아홉 장을 건네는 편이 빠르다. 자기 업무가 어느 한 장에 닿는지 찾아내는 순간, 대화의 속도가 달라진다.</p>
+        <CardGrid cols={3}>
+          {["검색", "분류", "요약", "초안 생성", "비교 검토", "이상 감지", "계획", "작업 연결", "도구 실행"].map((r, i) => (
+            <motion.div key={r} initial={{ opacity: 0, y: 6 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.03 }}>
+              <Card className="text-center py-5">
+                <div className="font-mono text-[11px] text-brand mb-1">0{i + 1}</div>
+                <div className="serif-kr text-[17px] font-bold text-ink-900 dark:text-ink-50">{r}</div>
+              </Card>
+            </motion.div>
+          ))}
+        </CardGrid>
+      </Section>
+
+      <Section n={5} title="구현의 다섯 가지 길">
         <div className="space-y-2">
           {[
-            ["LLM 직접 활용", "ChatGPT·Claude·Gemini에 프롬프트로 요청", "★☆☆"],
-            ["RAG", "사내 문서 기반 검색 + AI 답변 (NotebookLM 등)", "★★☆"],
-            ["데이터 분석/시각화", "엑셀/CSV 데이터를 AI로 분석", "★★☆"],
-            ["규칙 기반 자동화", "n8n·Make·Zapier 등 워크플로우", "★★☆"],
-            ["에이전트 워크플로우", "AI가 여러 도구 조합 자율 실행 (Claude Code 등)", "★★★"],
+            ["LLM 직접 활용", "ChatGPT·Claude·Gemini에 프롬프트로 요청한다.", "★☆☆"],
+            ["RAG", "사내 문서 위에 검색을 얹어 답을 인용과 함께 받는다.", "★★☆"],
+            ["데이터 분석", "엑셀이나 CSV를 읽혀 피벗과 그래프를 받는다.", "★★☆"],
+            ["규칙 기반 자동화", "n8n·Make·Zapier로 트리거와 흐름을 엮는다.", "★★☆"],
+            ["에이전트 워크플로우", "여러 도구를 묶어 순서대로 실행시킨다.", "★★★"],
           ].map(([n, d, s], i) => (
-            <motion.div key={n} initial={{ opacity: 0, x: -8 }} whileInView={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.06 }} className="void-card p-4 flex items-center justify-between gap-4">
-              <div>
-                <div className="textbook-h2 text-void-ink text-base">{n}</div>
-                <div className="text-[12px] text-void-muted">{d}</div>
+            <motion.div key={n} initial={{ opacity: 0, x: -6 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }} className="card p-4 flex items-center justify-between gap-4">
+              <div className="min-w-0">
+                <div className="serif-kr text-[17px] font-bold text-ink-900 dark:text-ink-50">{n}</div>
+                <div className="text-[13px] text-ink-600 dark:text-ink-300">{d}</div>
               </div>
-              <div className="font-serif text-neon-gold text-lg shrink-0">{s}</div>
+              <div className="font-mono text-brand text-lg shrink-0">{s}</div>
             </motion.div>
           ))}
         </div>
       </Section>
 
-      <Section n={6} title="Part 6 · Pain Point 8유형 (도요타 식)">
+      <Section n={6} title="‘시간이 오래 걸린다’ 말고, 어디에 멈추는가">
+        <p className="text-[14px] text-ink-600 dark:text-ink-300 leading-relaxed mb-4 max-w-[600px]">도요타식 여덟 가지 낭비는 팀이 Pain을 더 구체적으로 지목하도록 돕는 도구다.</p>
         <div className="flex flex-wrap gap-2">
-          {["Waiting", "Defects", "Overprocessing", "Motion", "Inventory", "Overproduction", "Unused Talent", "기타"].map((p, i) => (
-            <motion.span key={p} initial={{ opacity: 0, y: 6 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }} className="chip">
-              <span className="font-mono text-neon-cyan">0{i + 1}</span>
+          {["대기", "불량", "과도한 처리", "이동", "재고", "과다 생산", "역량 미활용", "그 밖"].map((p, i) => (
+            <span key={p} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-ink-200 dark:border-ink-800 bg-paper dark:bg-ink-800/30 text-[12.5px] text-ink-700 dark:text-ink-200">
+              <span className="font-mono text-[10.5px] text-brand">0{i + 1}</span>
               {p}
-            </motion.span>
+            </span>
           ))}
         </div>
-        <Callout tone="warn">
-          실무자가 Pain을 &ldquo;시간 오래 걸림&rdquo; 한 줄로 적었다면 부족. 위 8유형 중 어느 것인지 매칭하도록 질문.
-        </Callout>
       </Section>
 
-      <NextPrev prev={{ href: "/loop", label: "코칭 루프" }} next={{ href: "/recipes", label: "상황별 툴 레시피" }} />
+      <NextPrev prev={{ href: "/loop", label: "코칭 루프" }} next={{ href: "/recipes", label: "툴 레시피" }} />
     </PageFrame>
   );
 }
