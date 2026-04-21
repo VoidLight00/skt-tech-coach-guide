@@ -1,0 +1,160 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap");
+
+:root {
+  --void-bg: #07080b;
+  --void-surface: #0e1017;
+  --void-elev: #14171f;
+  --void-line: #1f2330;
+  --void-muted: #7b8193;
+  --void-text: #e6e9f2;
+  --void-ink: #f4f6fb;
+  --neon-cyan: #5cf1ff;
+  --neon-magenta: #ff4fd8;
+  --neon-gold: #ffd166;
+  --neon-lime: #b6f36a;
+}
+
+html, body {
+  background: var(--void-bg);
+  color: var(--void-text);
+  font-family: 'Pretendard', ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgba(92, 241, 255, 0.25);
+  color: #fff;
+}
+
+/* Background mesh */
+.void-mesh {
+  background-image:
+    radial-gradient(1200px 700px at 10% -10%, rgba(92,241,255,0.09), transparent 60%),
+    radial-gradient(900px 500px at 90% 10%, rgba(255,79,216,0.06), transparent 60%),
+    radial-gradient(600px 400px at 50% 100%, rgba(182,243,106,0.04), transparent 70%);
+}
+
+.void-scanline::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: repeating-linear-gradient(0deg, rgba(255,255,255,0.015) 0 1px, transparent 1px 3px);
+  mix-blend-mode: screen;
+}
+
+/* Shimmer text */
+.shine-text {
+  background: linear-gradient(100deg, #e6e9f2 0%, #5cf1ff 25%, #ff4fd8 55%, #e6e9f2 85%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  animation: shine 5s linear infinite;
+}
+
+/* Card base */
+.void-card {
+  background: linear-gradient(180deg, rgba(20,23,31,0.85), rgba(14,16,23,0.85));
+  border: 1px solid var(--void-line);
+  border-radius: 16px;
+  backdrop-filter: blur(6px);
+}
+
+.void-card:hover {
+  border-color: rgba(92,241,255,0.35);
+  box-shadow: 0 0 0 1px rgba(92,241,255,0.20), 0 14px 50px -18px rgba(92,241,255,0.35);
+  transition: all 220ms ease;
+}
+
+/* Divider */
+.neon-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(92,241,255,0.5), rgba(255,79,216,0.5), transparent);
+}
+
+/* Tag chips */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--void-line);
+  background: rgba(14,16,23,0.6);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--void-muted);
+}
+
+.chip.neon { color: var(--neon-cyan); border-color: rgba(92,241,255,0.35); }
+.chip.magenta { color: var(--neon-magenta); border-color: rgba(255,79,216,0.35); }
+.chip.gold { color: var(--neon-gold); border-color: rgba(255,209,102,0.35); }
+.chip.lime { color: var(--neon-lime); border-color: rgba(182,243,106,0.35); }
+.chip.red { color: #ff6b6b; border-color: rgba(255,107,107,0.4); }
+
+/* Book feel — numbered headings */
+.textbook-h1 {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.textbook-h2 {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 600;
+}
+
+/* Prose */
+.prose-void p { color: #c9cdda; line-height: 1.75; }
+.prose-void strong { color: #f4f6fb; }
+.prose-void code {
+  font-family: 'JetBrains Mono', ui-monospace;
+  background: rgba(92,241,255,0.08);
+  color: var(--neon-cyan);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #0a0c12; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #1f2330, #14171f);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #5cf1ff55, #ff4fd855); }
+
+/* Focus */
+*:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Hover link */
+.link-neon {
+  color: var(--neon-cyan);
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(92,241,255,0.35);
+  transition: all 200ms;
+}
+.link-neon:hover {
+  color: var(--neon-magenta);
+  border-bottom-color: rgba(255,79,216,0.6);
+}
+
+/* Highlight */
+mark {
+  background: linear-gradient(180deg, transparent 60%, rgba(92,241,255,0.28) 60%);
+  color: inherit;
+  padding: 0 2px;
+}
