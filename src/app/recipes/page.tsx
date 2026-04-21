@@ -3,8 +3,9 @@
 import { PageFrame, Section, Card, Callout, NextPrev } from "@/components/ui";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ExternalLink } from "lucide-react";
 
+type LinkRef = { label: string; url: string; hint?: string };
 type Recipe = {
   id: string;
   title: string;
@@ -18,6 +19,8 @@ type Recipe = {
   prompt?: string;
   demo: string;
   warn: string;
+  links?: LinkRef[];
+  aux?: string[];
 };
 
 const RECIPES: Recipe[] = [
@@ -35,7 +38,16 @@ const RECIPES: Recipe[] = [
 
 [여기에 제목과 URL을 붙여 넣기]`,
     demo: "요즘 어떤 키워드로 수집하시나요. 지난주 링크 열 개만 복사해 주시면, 몇 초 만에 표로 내어 보여드릴게요.",
-    warn: "내부 전용 URL이 섞여 있다면 업로드 전에 걸러낸다." },
+    warn: "내부 전용 URL이 섞여 있다면 업로드 전에 걸러낸다.",
+    links: [
+      { label: "ChatGPT", url: "https://chatgpt.com", hint: "로그인 후 새 대화에서 바로 붙여넣기" },
+      { label: "Claude", url: "https://claude.ai", hint: "Projects로 분류 기준 저장해두면 재사용 쉬움" },
+      { label: "Gemini", url: "https://gemini.google.com", hint: "긴 목록 한국어 분류 안정적" },
+    ],
+    aux: [
+      "시간 없을 때: 주제 5개만 고정해서 프롬프트에 박아두고 돌려쓴다",
+      "표 결과를 노션·Obsidian에 붙여 복구하면 주간 자산으로 누적",
+    ] },
 
   { id: "R2", title: "두 문서의 차이를 표로 뽑는다",
     situation: "제안서 두세 개, 정책 개정 전후, 경쟁사 약관을 나란히 놓고 다른 점을 찾는다",
@@ -52,7 +64,16 @@ const RECIPES: Recipe[] = [
 [문서 B]
 (전문)`,
     demo: "비교 기준만 고정해 두면, AI가 표를 일정한 모양으로 꾸준히 뽑아 줍니다. 사람은 어느 차이를 먼저 볼지만 결정하시면 됩니다.",
-    warn: "법적 해석은 반드시 사람이 다시 본다. 환각의 여지가 있다." },
+    warn: "법적 해석은 반드시 사람이 다시 본다. 환각의 여지가 있다.",
+    links: [
+      { label: "Claude", url: "https://claude.ai", hint: "200K 컨텍스트, PDF 직접 업로드 가능" },
+      { label: "Claude Projects", url: "https://support.anthropic.com/en/articles/9517075-what-are-projects", hint: "비교 기준을 System prompt로 저장" },
+      { label: "ChatGPT", url: "https://chatgpt.com", hint: "파일 업로드 후 비교 요청" },
+    ],
+    aux: [
+      "PDF라면 R5로 먼저 마크다운 변환 후 투입하는 편이 품질 높음",
+      "표 출력 포맷을 프롬프트에 못박으면 다음 주 재사용 가능",
+    ] },
 
   { id: "R3", title: "사내 문서 위에 Q&A를 얹는다",
     situation: "사내 규정과 매뉴얼에서 같은 답을 반복해서 찾고 있다",
@@ -231,6 +252,26 @@ export default function RecipesPage() {
                           )}
                           <Callout title="30초 시연">{r.demo}</Callout>
                           <Callout title="주의"><span className="text-ink-700 dark:text-ink-200">{r.warn}</span></Callout>
+                          {r.links && r.links.length > 0 && (
+                            <div className="mt-5">
+                              <div className="text-[11px] uppercase tracking-[0.18em] text-brand font-semibold mb-2">바로가기</div>
+                              <div className="flex flex-wrap gap-2">
+                                {r.links.map((l) => (
+                                  <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-ink-200 dark:border-ink-800 hover:border-brand hover:text-brand text-[13px] text-ink-700 dark:text-ink-200 transition"
+                                    title={l.hint}>
+                                    <ExternalLink className="w-3 h-3" />{l.label}
+                                  </a>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                          {r.aux && r.aux.length > 0 && (
+                            <div className="mt-4 text-[13px] text-ink-600 dark:text-ink-300">
+                              <div className="text-[11px] uppercase tracking-[0.18em] text-ink-500 font-semibold mb-1.5">현장 팁</div>
+                              <ul className="list-disc pl-5 space-y-1">{r.aux.map((a, i) => <li key={i}>{a}</li>)}</ul>
+                            </div>
+                          )}
                         </div>
                       </motion.div>
                     )}

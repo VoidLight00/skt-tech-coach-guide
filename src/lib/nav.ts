@@ -1,4 +1,4 @@
-import { BookOpen, CalendarDays, Repeat, LayoutGrid, Wrench, Film, ShieldAlert, Mic, Clapperboard, NotebookPen } from "lucide-react";
+import { BookOpen, CalendarDays, Repeat, LayoutGrid, Wrench, Film, ShieldAlert, Mic, Clapperboard, NotebookPen, Users } from "lucide-react";
 
 export type NavItem = {
   href: string;
@@ -11,6 +11,7 @@ export type NavItem = {
 export const NAV: NavItem[] = [
   { href: "/",            number: "00", label: "서문",             summary: "교과서 읽는 법과 오늘의 러닝 카드", icon: BookOpen },
   { href: "/today",       number: "01", label: "당일 실행플랜",     summary: "4월 21일과 23일, 현장 타임라인", icon: CalendarDays },
+  { href: "/teams",       number: "01a",label: "Room 2 팀 배치",     summary: "7개 테이블 · 참석 팀과 사전 준비", icon: Users },
   { href: "/script",      number: "02", label: "진입 스크립트",     summary: "팀 앞에 앉은 첫 1분", icon: Mic },
   { href: "/loop",        number: "03", label: "코칭 루프",        summary: "경청에서 정리까지 25분의 박자", icon: Repeat },
   { href: "/framework",   number: "04", label: "프레임워크",       summary: "업무 구조화·데이터 점검·난이도·구현 방식", icon: LayoutGrid },
