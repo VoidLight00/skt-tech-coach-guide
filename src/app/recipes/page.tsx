@@ -81,7 +81,17 @@ const RECIPES: Recipe[] = [
     why: "답마다 출처 문단이 인용되어 환각이 적다",
     flow: ["공개 가능한 문서 십에서 삼십 개를 업로드한다","용어 사전을 먼저 만들어 맥락을 잡는다","질문을 던지며 출처 문단을 함께 확인한다","반복 질문은 표준 FAQ로 정리해 팀에 공유한다"],
     demo: "사내 규정은 외부 업로드가 어려우니 공개 정책 문서로 먼저 보여드릴게요. PDF 세 개만 넣어도 출처까지 달린 답이 나옵니다.",
-    warn: "사내 규정의 원문을 외부 도구에 올리지 않는다. 공개본이나 요약·마스킹본만 쓴다." },
+    warn: "사내 규정의 원문을 외부 도구에 올리지 않는다. 공개본이나 요약·마스킹본만 쓴다.",
+    links: [
+      { label: "NotebookLM", url: "https://notebooklm.google.com", hint: "무료 · 프로젝트당 소스 50개까지" },
+      { label: "Claude Projects", url: "https://claude.ai", hint: "Pro 플랜, 긴 컨텍스트에 유리" },
+      { label: "ChatGPT GPTs", url: "https://chatgpt.com/gpts", hint: "지식 파일 업로드 후 사용자 정의 봇" },
+    ],
+    aux: [
+      "‘먼저 용어 사전부터 만들어줘’ 프롬프트로 초반 맥락 학습",
+      "답변은 항상 출처 문단 확인 후 사용. 출처 없으면 환각 가능성",
+      "사내 문서 그대로는 금지. 공개 정책·가이드라인으로 시연",
+    ] },
 
   { id: "R4", title: "회의 녹음에서 결정과 액션을 뽑는다",
     situation: "한 시간짜리 회의에서 키워드와 합의, 액션 아이템을 매주 손으로 정리한다",
@@ -96,7 +106,17 @@ const RECIPES: Recipe[] = [
 4. 액션 아이템을 담당, 마감, 성공 기준으로 표에 담아줘
 5. 등장한 핵심 키워드 상위 열 개`,
     demo: "투자자 미팅 녹화 하나를 넣으면, 질문과 대답이 자동으로 정리되고 OX표까지 몇 분 안에 채워집니다.",
-    warn: "개인정보나 민감 발언이 섞여 있다면 사내 정책을 먼저 확인한다." },
+    warn: "개인정보나 민감 발언이 섞여 있다면 사내 정책을 먼저 확인한다.",
+    links: [
+      { label: "Google AI Studio", url: "https://aistudio.google.com", hint: "mp3·mp4·영상 직접 업로드. Gemini 2.0+" },
+      { label: "Gemini", url: "https://gemini.google.com", hint: "웹 UI, 파일 업로드 간단" },
+      { label: "Whisper", url: "https://github.com/openai/whisper", hint: "로컬 STT, 오프라인 전사 필요 시" },
+    ],
+    aux: [
+      "회의 녹음 그대로보다 화자 구분 요청 프롬프트가 품질을 크게 올림",
+      "액션 아이템은 담당·마감·성공기준 셋으로 강제하면 실행률 상승",
+      "공개 유튜브 영상(공식 발표 등)으로 시연하면 NDA 걱정 없음",
+    ] },
 
   { id: "R5", title: "PDF·이미지·HWP를 AI가 읽을 수 있는 형태로 바꾼다",
     situation: "스캔본 PDF나 HWP여서 AI에 그대로 넣을 수 없다",
@@ -104,7 +124,17 @@ const RECIPES: Recipe[] = [
     why: "한글 문서와 표가 잘 살아남고 마크다운으로 바로 나온다",
     flow: ["원본을 올려 OCR을 돌리고 마크다운으로 받는다","표와 제목의 구조가 제대로 들어왔는지 눈으로 빠르게 훑는다","그 마크다운을 Claude나 ChatGPT에 넣어 본 작업을 한다","원문을 다시 봐야 할 지점을 표시해 둔다"],
     demo: "엑셀과 PDF가 분석이 안 된다는 말은, 대부분 정제 전에 분석을 맡겨서 그렇습니다. 마크다운으로 먼저 바꾸면 결과가 달라져요.",
-    warn: "개인정보가 들어간 문서는 마스킹 후에 올린다." },
+    warn: "개인정보가 들어간 문서는 마스킹 후에 올린다.",
+    links: [
+      { label: "사이오닉 AI", url: "https://www.sionicai.com/", hint: "한글 OCR·HWP 강점, 마크다운 출력" },
+      { label: "Claude Vision", url: "https://claude.ai", hint: "이미지·PDF를 대화창에 드래그" },
+      { label: "Upstage Document Parse", url: "https://www.upstage.ai/products/document-parse", hint: "국내 대안, 표 구조 보존 우수" },
+    ],
+    aux: [
+      "OCR 결과는 반드시 표·번호·제목 구조를 눈으로 훑고 교정",
+      "마크다운으로 변환된 파일을 그대로 Claude/ChatGPT에 붙여 다음 작업으로 연결",
+      "개인정보(주민번호·계좌)는 업로드 전 마스킹",
+    ] },
 
   { id: "R6", title: "엑셀과 CSV를 분석한다",
     situation: "매출과 지표 데이터를 매월 피벗하고 이상치를 찾고 그래프를 만든다",
@@ -122,7 +152,17 @@ const RECIPES: Recipe[] = [
 - 표 한 장, 막대그래프 두 장, 두 줄 해설
 - 재사용 가능한 파이썬 스크립트`,
     demo: "헤더만 잘 맞추면, 분석 결과와 다시 쓸 수 있는 코드까지 한 번에 받습니다. 다음 달에는 코드만 다시 돌리시면 됩니다.",
-    warn: "실매출이나 고객 데이터가 섞이면 민감도 ‘상’으로 올라간다. 그때는 R9로 경로를 바꾼다." },
+    warn: "실매출이나 고객 데이터가 섞이면 민감도 ‘상’으로 올라간다. 그때는 R9로 경로를 바꾼다.",
+    links: [
+      { label: "ChatGPT", url: "https://chatgpt.com", hint: "Data Analyst 모드 · 파이썬 자동 실행" },
+      { label: "Claude", url: "https://claude.ai", hint: "분석 코드 작성 강점, 실행은 로컬에서" },
+      { label: "Google Sheets + Gemini", url: "https://sheets.google.com", hint: "시트 내 Gemini 사이드패널 활용" },
+    ],
+    aux: [
+      "첫 행은 반드시 헤더만. 합계행·제목행이 섞이면 결과가 망가진다",
+      "‘재사용 가능한 파이썬 스크립트’ 요청이 다음 달을 1분 작업으로 바꿈",
+      "민감 데이터면 즉시 R9 경로로 전환",
+    ] },
 
   { id: "R7", title: "보고서나 메일의 초안을 만든다",
     situation: "같은 형식 문서를 매번 백지에서 다시 쓰고 있다",
@@ -141,7 +181,17 @@ const RECIPES: Recipe[] = [
 
 요청: 시사점 두세 안을 공격·방어·관망으로 나누어 각각 세 문단 이내로.`,
     demo: "‘잘 써줘’는 뻔한 문장을 낳습니다. 톤 샘플, 팩트, 여러 관점 이 셋이 들어가면 결과가 달라집니다.",
-    warn: "수치와 고유명사는 사람이 꼭 다시 본다." },
+    warn: "수치와 고유명사는 사람이 꼭 다시 본다.",
+    links: [
+      { label: "Claude", url: "https://claude.ai", hint: "한국어 어조·문장 구조가 가장 자연스러움" },
+      { label: "ChatGPT", url: "https://chatgpt.com", hint: "빠른 초안 여러 버전 생성" },
+      { label: "Gemini", url: "https://gemini.google.com", hint: "짧은 카피·공식 문체 무난" },
+    ],
+    aux: [
+      "톤 레퍼런스 1–2편을 프롬프트 앞에 붙이면 결과 일관성 크게 상승",
+      "공격·방어·관망 같은 관점 축을 주면 안끼리 차별성이 명확해짐",
+      "최종 채택안에 들어갈 수치·고유명사는 사람 검증 필수",
+    ] },
 
   { id: "R8", title: "매주 반복되는 흐름을 자동화한다",
     situation: "매주 같은 순서로 수집하고 정리하고 보낸다",
@@ -149,7 +199,18 @@ const RECIPES: Recipe[] = [
     why: "노코드로 트리거·API·LLM·메일을 이어붙일 수 있다",
     flow: ["현재 수작업을 일곱 단계 이하로 종이에 그린다","API가 있는 단계와 손으로 하는 단계를 나눈다","API가 있는 곳만 자동화하고, 판단에는 사람의 승인 노드를 남긴다","MVP를 이 주 동안 돌린 뒤 개선한다"],
     demo: "오늘 당장 만들기는 어렵지만, 매주 똑같은 순서라면 한 주의 투자로 가능합니다. 판단하는 자리에 사람의 승인 노드는 꼭 남겨 두세요.",
-    warn: "사내망 자동화는 별도 주제다. ‘확인 후 안내드리겠습니다’로 대답하고 담당자에게 전달한다." },
+    warn: "사내망 자동화는 별도 주제다. ‘확인 후 안내드리겠습니다’로 대답하고 담당자에게 전달한다.",
+    links: [
+      { label: "n8n", url: "https://n8n.io", hint: "오픈소스·자가호스팅 가능, 노코드 워크플로우" },
+      { label: "Make", url: "https://www.make.com", hint: "시각적 시나리오 편집기, 진입 쉬움" },
+      { label: "Zapier", url: "https://zapier.com", hint: "SaaS 연동 가장 풍부" },
+      { label: "Google Apps Script", url: "https://script.google.com", hint: "Workspace 내부 자동화" },
+    ],
+    aux: [
+      "전체 자동화보다 ‘승인 노드 한 개 포함된 반자동’이 현실적",
+      "주간 루틴 7단계 이하로 쪼갠 후 API 유무 표시가 설계의 출발점",
+      "n8n은 Docker로 로컬 실행 가능. 교육 후 주말에 실험하기 좋음",
+    ] },
 
   { id: "R9", title: "데이터는 두고, AI에서 코드만 받아 사내에서 돌린다",
     situation: "데이터는 외부 AI에 올릴 수 없지만, 분석 로직 설계는 AI의 도움을 받고 싶다",
@@ -165,7 +226,18 @@ const RECIPES: Recipe[] = [
 - 규칙 기반과 간단한 로지스틱 회귀 두 가지 버전
 - 사내망에서 오프라인 실행 기준. 외부 API는 쓰지 말 것`,
     demo: "민감 데이터는 절대 업로드하지 않습니다. 샘플 구조만 드리고 코드를 받아, 사내에서 돌리는 것이 가장 자주 쓰는 방식입니다.",
-    warn: "사내 도구 관련 질문은 담당자에게 넘긴다." },
+    warn: "사내 도구 관련 질문은 담당자에게 넘긴다.",
+    links: [
+      { label: "ChatGPT", url: "https://chatgpt.com", hint: "파이썬·엑셀 매크로 코드 생성" },
+      { label: "Claude", url: "https://claude.ai", hint: "pandas·sklearn 코드 품질 안정적" },
+      { label: "Claude Code", url: "https://claude.com/claude-code", hint: "터미널 환경에서 로컬 파일과 함께 설계" },
+      { label: "Python 공식", url: "https://www.python.org/downloads/", hint: "로컬 실행 환경 설치" },
+    ],
+    aux: [
+      "AI에 공유하는 건 컬럼 이름과 가상 샘플 3줄까지. 실데이터 금지",
+      "코드 첫 실행은 반드시 더미로 검증 후 실데이터 투입",
+      "에러 메시지만 복사해 재질문하면 데이터 유출 없이 디버깅 가능",
+    ] },
 
   { id: "R10", title: "여러 단계가 엮인 작업을 에이전트에 맡긴다",
     situation: "수집에서 정제, 분석, 보고까지 도구가 여러 개 엮인 큰 작업이다",
@@ -173,7 +245,18 @@ const RECIPES: Recipe[] = [
     why: "에이전트 팀이 역할을 나눠 릴레이로 실행한다",
     flow: ["수집가·정제가·분석가·작성가처럼 역할로 쪼갠다","각 에이전트의 입력과 출력을 계약처럼 정의한다","파일 시스템을 공유 메모리로 쓴다","사람은 관문에서 검토와 승인만 한다"],
     demo: "오늘 직접 하기보다는 이런 구조가 있다는 것만 기억하세요. 여러 도구가 이어지는 업무에선 AI 팀을 꾸려 릴레이로 실행하는 길이 있습니다.",
-    warn: "기대치 관리가 핵심이다. 오늘의 시도 과제로 권하지는 않는다." },
+    warn: "기대치 관리가 핵심이다. 오늘의 시도 과제로 권하지는 않는다.",
+    links: [
+      { label: "Claude Code", url: "https://claude.com/claude-code", hint: "터미널 기반 에이전트, 파일시스템 공유 메모리" },
+      { label: "Claude Agent SDK", url: "https://docs.claude.com/en/api/agent-sdk/overview", hint: "커스텀 에이전트 구축" },
+      { label: "GPT Custom Actions", url: "https://platform.openai.com/docs/actions/introduction", hint: "GPTs에서 외부 API 호출" },
+      { label: "LangChain", url: "https://www.langchain.com", hint: "에이전트·체인 프레임워크" },
+    ],
+    aux: [
+      "에이전트는 역할을 계약처럼 쪼갠다 — 수집가 / 정제가 / 분석가 / 작성가",
+      "사람은 관문에서 검토·승인만. 자율 실행 구간은 최소화",
+      "오늘 시연보다는 ‘가능성 예고’ 수준으로 — 실무자 기대치 적정화",
+    ] },
 ];
 
 export default function RecipesPage() {

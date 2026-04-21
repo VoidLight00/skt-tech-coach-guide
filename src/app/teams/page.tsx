@@ -18,7 +18,10 @@ type Table = {
   prep: string[];
   questions: string[];
   pitfall: string;
+  mine?: boolean;
 };
+
+const MY_TABLES = ["T2", "T5"];
 
 const TEAMS = [
   { n: 1, name: "SV추진팀" },
@@ -204,12 +207,50 @@ const TABLES: Table[] = [
 ];
 
 export default function TeamsPage() {
+  const mine = TABLES.filter((t) => MY_TABLES.includes(t.id));
   return (
     <PageFrame
       eyebrow="01a · Room 2 팀 배치"
       title="7개 테이블, 다섯 팀, 서른 명."
       lede="참석 팀과 주제, 대표자, 그리고 각 테이블에 들어가기 전에 손에 쥐고 있으면 좋을 준비물을 정리했다. 앉기 전에 이 페이지만 열어도 첫 1분이 달라진다."
     >
+      {/* My assigned tables — pinned to top */}
+      <Section n={0} title="오늘 내가 맡는 두 테이블">
+        <Callout tone="brand">
+          <strong className="text-ink-900 dark:text-ink-50">VOC (T2) · AICC (T5)</strong> — 두 테이블 모두 <strong>고객Care팀</strong>. 민감도는 T2 중, T5 상. 팀당 평균 약 55분 여유.
+        </Callout>
+        <div className="grid md:grid-cols-2 gap-4 mt-4">
+          {mine.map((t) => (
+            <Card key={t.id}>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="font-mono text-[12px] text-brand">{t.id}</span>
+                <span className="text-[11px] px-2 py-0.5 rounded-full border border-brand-100 bg-brand-50 dark:bg-[rgba(255,107,53,0.1)] text-brand font-semibold">내 담당</span>
+              </div>
+              <div className="serif-kr text-[22px] font-bold text-ink-900 dark:text-ink-50 leading-snug mb-2">{t.topic}</div>
+              <p className="text-[13px] text-ink-600 dark:text-ink-300 mb-3">{t.teams.join(" · ")} · {t.members.length}명 · 민감도 {t.sensitivity}</p>
+              <div className="text-[11px] uppercase tracking-[0.18em] text-brand font-semibold mb-1.5">핵심 레시피</div>
+              <div className="flex flex-wrap gap-1.5 mb-3">
+                {t.recipes.map((r) => (
+                  <Link key={r.id} href={`/recipes#${r.id}`} className="inline-flex items-center gap-1 px-2 py-1 rounded-md border border-ink-200 dark:border-ink-800 text-[12px] font-mono text-brand hover:bg-brand hover:text-white transition">
+                    {r.id}<ExternalLink className="w-2.5 h-2.5" />
+                  </Link>
+                ))}
+              </div>
+              <a href={`#${t.id}`} className="text-[13px] text-brand hover:underline font-semibold">↓ 상세 보기</a>
+            </Card>
+          ))}
+        </div>
+        <Card hover={false} className="mt-4 border-brand-100 bg-brand-50 dark:bg-[rgba(255,107,53,0.05)] dark:border-[rgba(255,107,53,0.25)]">
+          <div className="text-[11px] uppercase tracking-[0.18em] text-brand font-semibold mb-2">두 테이블 공통 — 오늘 밤까지 쥐고 자야 할 것</div>
+          <ul className="space-y-1.5 text-[14px] text-ink-800 dark:text-ink-100 list-disc pl-5 leading-relaxed">
+            <li><strong>R9 더미 데이터 구조 두 세트</strong> — VOC용(일자·채널·키워드·감정·처리결과), AICC용(일자·문의유형·봇응답·핸드오프·CSAT)</li>
+            <li><strong>ChatGPT·Claude·Gemini 로그인 확인</strong> + 시연용 브라우저 프로필 분리</li>
+            <li><strong>R9 프롬프트 1회 실행 → 성공 스크린샷 저장</strong> (현장 wifi 불안정 대비 백업)</li>
+            <li><strong>AICC 팀용 프롬프트 A/B 비교 예시</strong> 한 쌍 미리 준비 — 그들은 이미 AI 잘 다루니 ‘기본 LLM 쓰세요’가 먹히지 않음</li>
+            <li><strong>VOC 분류 8유형 본인 기준</strong> 한 번 말로 정의해두기 — 프롬프트에 박으면 즉석 분류 시연 가능</li>
+          </ul>
+        </Card>
+      </Section>
       <Section n={1} title="참석 팀">
         <div className="flex flex-wrap gap-2">
           {TEAMS.map((t) => (
@@ -228,18 +269,24 @@ export default function TeamsPage() {
               <tr><th className="text-left">#</th><th className="text-left">주제</th><th className="text-left">팀</th><th className="text-left">인원</th><th className="text-left">민감도</th></tr>
             </thead>
             <tbody>
-              {TABLES.map((t, i) => (
-                <tr key={t.id}>
-                  <td className="font-mono text-brand text-[13px]">{String(i + 1).padStart(2, "0")}</td>
-                  <td>
-                    <a href={`#${t.id}`} className="text-ink-900 dark:text-ink-50 hover:text-brand font-semibold">{t.topic}</a>
-                    {t.subtopic && <div className="text-[12px] text-ink-500 italic">+ {t.subtopic}</div>}
-                  </td>
-                  <td className="text-[13px] text-ink-700 dark:text-ink-200">{t.teams.join(" · ")}</td>
-                  <td className="text-[13px] text-ink-700 dark:text-ink-200">{t.members.length}명</td>
-                  <td className="text-[13px]">{t.sensitivity}</td>
-                </tr>
-              ))}
+              {TABLES.map((t, i) => {
+                const isMine = MY_TABLES.includes(t.id);
+                return (
+                  <tr key={t.id} className={isMine ? "bg-brand-50 dark:bg-[rgba(255,107,53,0.06)]" : ""}>
+                    <td className="font-mono text-brand text-[13px]">{String(i + 1).padStart(2, "0")}</td>
+                    <td>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <a href={`#${t.id}`} className="text-ink-900 dark:text-ink-50 hover:text-brand font-semibold">{t.topic}</a>
+                        {isMine && <span className="text-[10px] uppercase tracking-[0.16em] px-1.5 py-0.5 rounded border border-brand text-brand font-semibold">내 담당</span>}
+                      </div>
+                      {t.subtopic && <div className="text-[12px] text-ink-500 italic">+ {t.subtopic}</div>}
+                    </td>
+                    <td className="text-[13px] text-ink-700 dark:text-ink-200">{t.teams.join(" · ")}</td>
+                    <td className="text-[13px] text-ink-700 dark:text-ink-200">{t.members.length}명</td>
+                    <td className="text-[13px]">{t.sensitivity}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </Card>
@@ -282,11 +329,13 @@ export default function TeamsPage() {
 
 function TableBlock({ t, n }: { t: Table; n: number }) {
   const sensColor = t.sensitivity === "상" ? "text-red-500" : t.sensitivity === "중" ? "text-brand" : t.sensitivity === "혼합" ? "text-ink-500" : "text-emerald-500";
+  const isMine = MY_TABLES.includes(t.id);
   return (
-    <div className="border-t border-ink-200 dark:border-ink-800 pt-6">
+    <div className={`border-t pt-6 ${isMine ? "border-brand/40" : "border-ink-200 dark:border-ink-800"}`}>
       <div className="flex items-baseline gap-3 mb-2 flex-wrap">
         <span className="font-mono text-[12px] text-brand">테이블 {String(n).padStart(2, "0")}</span>
         <span className={`text-[12px] font-semibold ${sensColor}`}>민감도 {t.sensitivity}</span>
+        {isMine && <span className="text-[10px] uppercase tracking-[0.16em] px-2 py-0.5 rounded-full bg-brand text-white font-semibold">내 담당</span>}
       </div>
       <h3 className="serif-kr text-[24px] md:text-[28px] font-bold tracking-tight text-ink-900 dark:text-ink-50 mb-1">{t.topic}</h3>
       {t.subtopic && <p className="text-[13px] text-ink-500 italic mb-3">+ {t.subtopic}</p>}
